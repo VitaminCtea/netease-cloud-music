@@ -1,0 +1,30 @@
+@import "../../style/variable"
+@import "../../style/helper"
+
+.icon-topList
+  position: relative
+  width: $icon_width
+  height: $icon_height
+  background-color: $official_color
+  border-radius: 50%
+  @include icon-background-highlight
+  .icon-topList-content
+    @include horizontal-center(absolute)
+    .position-container::before, .position-container::after
+      content: ''
+      display: inline-block
+      width: pxToRem(6)
+      height: pxToRem(20)
+      background-color: #fff
+      border-radius: pxToRem(4)
+    .position-container::before
+      margin-right: pxToRem(3)
+    .position-container::after
+      height: pxToRem(16)
+      margin-left: pxToRem(3)
+    .icon-main
+      display: inline-block
+      width: pxToRem(6)
+      height: pxToRem(28)
+      border-radius: pxToRem(4)
+      background-color: #fff

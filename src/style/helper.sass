@@ -1,0 +1,66 @@
+@import "./variable"
+
+@function pxToRem($px)
+  @return $px / 16 * 1rem
+
+@mixin borderNth($radius, $index: 1)
+  border-radius: nth($radius, 1) * $index nth($radius, 2) * $index nth($radius, 3) * $index nth($radius, 4) * $index
+
+@mixin thinBorder($directionMaps: bottom, $color: #ccc, $width: 1px, $radius: (0, 0, 0, 0), $position: after)
+  $directionMaps: if(list == type-of($directionMaps), $directionMaps, ($directionMaps))
+  @each $directionMap in $directionMaps
+    border-#{$directionMap}: $width solid $color
+
+  @if list == type-of($radius)
+    @include borderNth($radius)
+  @else
+    border-radius: $radius
+
+  @media only screen and (-webkit-device-pixel-ratio: 2)
+    &
+      position: relative
+      @each $directionMap in $directionMaps
+        border-#{ $directionMap }: none
+    &:#{$position}
+      content: ''
+      position: absolute
+      top: 0
+      left: 0
+      display: block
+      width: 200%
+      height: 200%
+      transform: scale(0.5)
+      box-sizing: border-box
+      padding: 1px
+      transform-origin: 0 0
+      pointer-events: none
+      border: 0 solid $color
+      @each $directionMap in $directionMaps
+        border-#{ $directionMap }-width: $width
+      @if (list == type-of($radius))
+        @include borderNth($radius, 2)
+      @else
+        border-radius: $radius * 2
+
+  @media only screen and (-webkit-device-pixel-ratio: 3)
+    &:#{ $position }
+      @if list == type-of($radius)
+        @include borderNth($radius, 3)
+      @else
+        border-radius: $radius * 3
+      width: 300%
+      height: 300%
+      transform: scale(0.3333)
+
+@mixin horizontal-center($position: absolute)
+  $position-type-list: (absolute, relative)
+  @if index($position-type-list, $position) != null
+    position: $position
+    top: 50%
+    left: 50%
+    transform: translate(-50%, -50%)
+  @else
+    @error 'The #{$position} parameter must be "#{nth($position-type-list, 1)}" or "#{nth($position-type-list, 2)}"'
+
+@mixin icon-background-highlight
+  background-image: linear-gradient(to right, rgba(255, 255, 255, $icon_background_highLight), $official_color, $official_color, $official_color)

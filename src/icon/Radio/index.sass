@@ -1,0 +1,63 @@
+@import "../../style/variable"
+@import "../../style/helper"
+
+.icon-radio
+  position: relative
+  width: $icon_width
+  height: $icon_height
+  background-color: $official_color
+  border-radius: 50%
+  @include icon-background-highlight
+  .icon-radio-content
+    @include horizontal-center(absolute)
+    .icon-cylindrical, .icon-innerCircle
+      border: 3px solid $type_icon_color
+      border-radius: 50%
+    .icon-cylindrical
+      position: relative
+      width: pxToRem(26)
+      height: pxToRem(26)
+    .icon-innerCircle
+      @include horizontal-center(absolute)
+      width: pxToRem(14)
+      height: pxToRem(14)
+    .icon-position
+      @include horizontal-center(absolute)
+      .icon-music-notation
+        position: relative
+        width: pxToRem(10)
+        height: pxToRem(14)
+        left: pxToRem(-2)
+        top: pxToRem(12)
+        border-radius: 50%
+        background-color: $official_color
+        .icon-music-circle
+          position: absolute
+          width: pxToRem(8)
+          height: pxToRem(8)
+          left: 0
+          bottom: 0
+          background-color: $type_icon_color
+          border-radius: 50%
+          box-shadow: pxToRem(-2) 0 $official_color
+        .icon-music-line
+          position: absolute
+          left: pxToRem(5)
+          bottom: pxToRem(5)
+          width: pxToRem(3)
+          height: pxToRem(15)
+          background-color: $type_icon_color
+          border-radius: pxToRem(10)
+          box-shadow: pxToRem(3) pxToRem(3) $official_color
+        .icon-music-tail
+          position: absolute
+          top: pxToRem(-15)
+          left: pxToRem(5)
+          border-width: pxToRem(3)
+          border-style: solid
+          border-color: transparent transparent transparent $type_icon_color
+          width: pxToRem(12)
+          height: pxToRem(12)
+          border-top-left-radius: 10px
+          border-bottom-left-radius: 50%
+          transform: rotate(-45deg)

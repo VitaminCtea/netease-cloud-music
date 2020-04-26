@@ -1,0 +1,40 @@
+@import "../../style/variable"
+@import "../../style/helper"
+
+.icon-live
+  position: relative
+  width: $icon_width
+  height: $icon_height
+  background-color: $official_color
+  border-radius: 50%
+  .icon-live-content
+    @include horizontal-center(absolute)
+    .icon-live-GreatCircle
+      position: relative
+      width: pxToRem(32)
+      height: pxToRem(32)
+      background-color: $type_icon_color
+      border-radius: 50%
+      .icon-live-triangle
+        position: absolute
+        left: pxToRem(-2)
+        top: 50%
+        transform: translateY(-50%)
+        width: 0
+        height: 0
+        border: 10px solid
+        border-color: transparent transparent transparent $official_color
+      .icon-live-mediumCircle
+        @include horizontal-center(absolute)
+        width: pxToRem(14)
+        height: 14px
+        background-color: $official_color
+        border-radius: 50%
+        .icon-live-smallCircle
+          position: absolute
+          top: pxToRem(3)
+          left: 40%
+          width: pxToRem(6)
+          height: pxToRem(6)
+          background-color: $type_icon_color
+          border-radius: 50%

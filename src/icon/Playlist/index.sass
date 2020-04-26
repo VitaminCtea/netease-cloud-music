@@ -1,0 +1,67 @@
+@import "../../style/variable"
+@import "../../style/helper"
+
+.icon-playlist
+  position: relative
+  width: $icon_width
+  height: $icon_height
+  background-color: $official_color
+  border-radius: 50%
+  @include icon-background-highlight
+  .icon-playlist-content
+    @include horizontal-center()
+    display: flex
+    justify-content: space-between
+    align-items: center
+    background-color: $type_icon_color
+    width: pxToRem(26)
+    height: pxToRem(26)
+    border-radius: pxToRem(5)
+    .icon-music
+      position: relative
+      width: pxToRem(15)
+      height: pxToRem(22)
+      left: pxToRem(-4)
+      .circle
+        position: absolute
+        width: pxToRem(8)
+        height: pxToRem(8)
+        left: 0
+        bottom: 0
+        background-color: $official_color
+        border-radius: 50%
+      .line
+        position: absolute
+        left: pxToRem(5)
+        bottom: pxToRem(5)
+        width: pxToRem(3)
+        height: pxToRem(16)
+        background-color: $official_color
+        border-radius: pxToRem(10)
+      .tail
+        position: absolute
+        top: pxToRem(-4)
+        left: pxToRem(5)
+        border-width: pxToRem(3)
+        border-style: solid
+        border-color: transparent transparent transparent $official_color
+        width: pxToRem(8)
+        height: pxToRem(8)
+        border-top-left-radius: pxToRem(10)
+        border-bottom-left-radius: 50%
+        transform: rotate(-45deg)
+    .icon-menu
+      display: flex
+      flex-direction: column
+      justify-content: space-between
+      height: pxToRem(16)
+      margin-left: pxToRem(4)
+      .menu
+        width: pxToRem(12)
+        height: pxToRem(2)
+        background-color: $official_color
+        border-radius: pxToRem(10)
+        &:nth-child(2)
+          width: pxToRem(10)
+        &:nth-child(3)
+          width: pxToRem(6)

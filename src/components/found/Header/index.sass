@@ -1,0 +1,51 @@
+@import "src/style/helper"
+@import "src/style/variable"
+
+.container
+  display: flex
+  justify-content: space-between
+  align-items: center
+  font-size: pxToRem(14)
+  margin-bottom: pxToRem(30)
+  .main
+    grid-column: 2
+    display: flex
+    justify-content: center
+    align-items: center
+    .content
+      margin-right: pxToRem(20)
+      .link, .defaultActive
+        text-decoration: none
+        color: $text_color
+      &:last-child
+        margin-right: 0
+  .menu
+    overflow: hidden
+    .menuIcon
+      display: inline-block
+      width: pxToRem(22)
+      height: pxToRem(2)
+      @include thinBorder(top, $icon_menu_color, 2px)
+      @include thinBorder(bottom, $icon_menu_color, 2px)
+      //border-top: calcRect(2) solid $icon_menu_color
+      //border-bottom: calcRect(2) solid $icon_menu_color
+      background-color: $icon_menu_color
+      padding: pxToRem(5) 0
+      background-clip: content-box
+  .search
+    .searchIcon
+      position: relative
+      width: pxToRem(15)
+      height: pxToRem(15)
+      border: pxToRem(2) solid $icon_search_color
+      border-radius: 50%
+      transform: rotate(45deg)
+      &:after
+        content: ''
+        position: absolute
+        right: pxToRem(-6)
+        top: 50%
+        transform: translateY(-50%)
+        width: pxToRem(6)
+        height: pxToRem(2)
+        background-color: $icon_search_color

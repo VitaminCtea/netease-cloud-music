@@ -1,0 +1,35 @@
+@import "../../style/variable"
+@import "../../style/helper"
+
+.icon-recommend
+  width: $icon_width
+  height: $icon_height
+  background-color: $official_color
+  border-radius: 50%
+  @include icon-background-highlight
+  .calendar
+    @include horizontal-center(relative)
+    width: pxToRem(26)
+    height: pxToRem(18)
+    border: pxToRem(2) solid $type_icon_color
+    border-radius: pxToRem(6)
+    background-color: $type_icon_color
+    padding-top: pxToRem(7)
+    background-clip: content-box
+    &::before, &::after
+      content: ''
+      position: absolute
+      width: pxToRem(2)
+      height: pxToRem(5)
+      background-color: $type_icon_color
+      top: pxToRem(-3)
+    &::before
+      left: pxToRem(6)
+    &::after
+      right: pxToRem(6)
+    .content
+      text-align: center
+      line-height: pxToRem(18)
+      color: $official_color
+      font-weight: bold
+      font-size: pxToRem(14)

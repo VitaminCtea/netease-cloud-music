@@ -3,6 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@better-scroll/core": "^2.0.0-beta.6",
+    "@better-scroll/slide": "^2.0.0-beta.6",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.5.0",
     "@testing-library/user-event": "^7.2.1",
@@ -10,9 +12,17 @@
     "@types/node": "^12.12.37",
     "@types/react": "^16.9.34",
     "@types/react-dom": "^16.9.6",
+    "@types/redux": "^3.6.0",
+    "husky": "^4.2.5",
+    "lint-staged": "^10.1.7",
+    "node-sass": "^4.14.0",
+    "prettier": "^2.0.5",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
+    "react-router-dom": "^5.1.2",
     "react-scripts": "3.4.1",
+    "redux-devtools-extension": "^2.13.8",
+    "redux-thunk": "^2.3.0",
     "typescript": "^3.7.5"
   },
   "scripts": {
@@ -21,8 +31,37 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "src/**/*.{js,jsx,ts,tsx,json,css,scss,sass,md}": [
+      "prettier --write"
+    ]
+  },
+  "extends": [
+    "plugin:react-hooks/recommended"
+  ],
   "eslintConfig": {
-    "extends": "react-app"
+    "extends": [
+      "react-app",
+      "shared-config"
+    ],
+    "rules": {
+      "additional-rule": "warn"
+    },
+    "overrides": [
+      {
+        "files": [
+          "**/*.ts?(x)"
+        ],
+        "rules": {
+          "additional-typescript-only-rule": "warn"
+        }
+      }
+    ]
   },
   "browserslist": {
     "production": [
@@ -35,5 +74,11 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "eslint-plugin-react-hooks": "^3.0.0",
+    "http-proxy-middleware": "^1.0.3",
+    "postcss-normalize": "^9.0.0",
+    "redux-logger": "^3.0.6"
   }
 }

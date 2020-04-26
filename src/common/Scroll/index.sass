@@ -1,0 +1,50 @@
+@import "../../style/helper"
+
+.slide-banner
+  position: relative
+  .slide-banner-wrapper
+    min-height: 1px
+    overflow: hidden
+    border-radius: 10px
+    width: 100%
+    .slide-banner-scroll
+      white-space: nowrap
+      font-size: 0
+      .slide-item
+        display: inline-block
+        width: 100%
+        line-height: 150px
+        text-align: center
+        font-size: 26px
+        img
+          display: block
+          width: 100%
+        &:nth-child(1)
+          background-color: lightseagreen
+        &:nth-child(2)
+          background-color: #DDA789
+        &:nth-child(3)
+          background-color: #C3D899
+        &:nth-child(4)
+          background-color: #F2D4A7
+        &:nth-child(5)
+          background-color: lightseagreen
+        &:nth-child(6)
+          background-color: #95B8D1
+        &:nth-child(7)
+          background-color: #DDA789
+    .docs-wrapper
+      position: absolute
+      bottom: pxToRem(4)
+      left: 50%
+      transform: translateX(-50%)
+      .dot
+        display: inline-block
+        margin: 0 pxToRem(5)
+        width: pxToRem(8)
+        height: pxToRem(8)
+        border-radius: 50%
+        background: #eee
+        &.active
+          width: pxToRem(20)
+          border-radius: pxToRem(5)
