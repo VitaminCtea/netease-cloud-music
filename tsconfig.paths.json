@@ -1,0 +1,16 @@
+{
+  "compilerOptions": {
+    "baseUrl": "src",
+    "paths": {
+      "@": ["src"],
+      "actions": ["src/actions"],
+      "api": ["src/api"],
+      "common": ["src/common"],
+      "components": ["src/components"],
+      "containers": ["src/containers"],
+      "helper": ["src/helper"],
+      "icon": ["src/icon"],
+      "reducers": ["src/reducers"]
+    }
+  }
+}

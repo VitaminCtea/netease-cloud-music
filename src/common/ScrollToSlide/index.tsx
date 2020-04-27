@@ -49,6 +49,7 @@ export class ScrollToSlide extends React.Component<Props, State> {
         return null
     }
     componentDidMount(): void {
+        this.setWrapperDefaultHeight()
         let id = setInterval(() => {
             if (this.isImagesComplete(this.contentRef.children)) {
                 clearInterval(id)
@@ -57,16 +58,18 @@ export class ScrollToSlide extends React.Component<Props, State> {
             }
         }, 10)
     }
+    setWrapperDefaultHeight() {
+        const width = this.wrapperRef.clientWidth
+        const result = 148.547 / width * 100
+        this.wrapperRef.style.paddingBottom = result + '%'
+    }
     isImagesComplete(images: any) {
         if (!images.length) return false
         let count = 0
         for (let i: number = 0; i < images.length; i++) {
-            const el = images[i]
-            if (el.nodeName !== 'IMG') {
-                const img = el.firstElementChild
-                if (img.nodeType === 1 && img.nodeName === 'IMG' && img.complete) {
-                    count++
-                }
+            const img = images[i].firstElementChild
+            if (img.nodeType === 1 && img.nodeName === 'IMG' && img.complete) {
+                count++
             }
         }
         return count === images.length
@@ -82,6 +85,7 @@ export class ScrollToSlide extends React.Component<Props, State> {
         }
         totalWidth += 2 * sliderWidth
         this.contentRef.style.width = totalWidth + 'px'
+        this.wrapperRef.style.paddingBottom = '0'
     }
     initScroll() {
         clearTimeout(this.playTimer)
