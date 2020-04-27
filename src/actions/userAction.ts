@@ -1,4 +1,4 @@
-import { request } from '../api/axios'
+import { request } from 'helper/axios'
 
 export const SET_LOGIN = 'SET_LOGIN'
 export const SET_REGISTER = 'SET_REGISTER'

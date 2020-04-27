@@ -5,16 +5,7 @@ import './index.sass'
 
 BScroll.use(Slide)
 
-type Props = {
-    interval?: number
-    refreshDelay?: number
-    childrenLength?: number
-    scrollX?: boolean
-    scrollY?: boolean
-    loop?: boolean
-    momentum?: boolean
-    bounce?: boolean
-}
+type Props = typeof ScrollToSlide.defaultProps
 type State = { currentPageIndex: number; dotsLength: any }
 
 export class ScrollToSlide extends React.Component<Props, State> {
@@ -25,7 +16,8 @@ export class ScrollToSlide extends React.Component<Props, State> {
         scrollY: false,
         loop: true,
         momentum: false,
-        bounce: false
+        bounce: false,
+        childrenLength: 5
     }
     wrapperRef!: HTMLElement
     contentRef!: HTMLElement

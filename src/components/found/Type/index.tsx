@@ -1,9 +1,9 @@
 import React from "react"
-import Recommend from "../../../icon/Recommend"
-import Playlist from "../../../icon/Playlist"
-import TopList from "../../../icon/Toplist"
-import Radio from "../../../icon/Radio"
-import Live from "../../../icon/Live"
+import Recommend from "icon/Recommend"
+import Playlist from "icon/Playlist"
+import TopList from "icon/Toplist"
+import Radio from "icon/Radio"
+import Live from "icon/Live"
 import './index.sass'
 
 export default function Type() {

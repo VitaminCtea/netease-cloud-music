@@ -13,6 +13,7 @@
     "@types/react": "^16.9.34",
     "@types/react-dom": "^16.9.6",
     "@types/redux": "^3.6.0",
+    "axios": "^0.19.2",
     "husky": "^4.2.5",
     "lint-staged": "^10.1.7",
     "node-sass": "^4.14.0",
@@ -26,9 +27,9 @@
     "typescript": "^3.7.5"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
+    "start": "react-app-rewired start",
+    "build": "react-app-rewired build",
+    "test": "react-app-rewired test",
     "eject": "react-scripts eject"
   },
   "husky": {
@@ -37,7 +38,7 @@
     }
   },
   "lint-staged": {
-    "src/**/*.{js,jsx,ts,tsx,json,css,scss,sass,md}": [
+    "src/**/*.{js,jsx,ts,tsx,json,css,md}": [
       "prettier --write"
     ]
   },
@@ -76,9 +77,11 @@
     ]
   },
   "devDependencies": {
+    "customize-cra": "^0.9.1",
     "eslint-plugin-react-hooks": "^3.0.0",
     "http-proxy-middleware": "^1.0.3",
     "postcss-normalize": "^9.0.0",
+    "react-app-rewired": "^2.1.5",
     "redux-logger": "^3.0.6"
   }
 }
