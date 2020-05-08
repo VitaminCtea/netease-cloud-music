@@ -31,6 +31,7 @@
         @include thinBorder((top, right, bottom, left), $recommend_more_border_color, 1px, (10px, 10px, 10px, 10px))
     .recommend-details
       padding-top: pxToRem(14)
+      white-space: nowrap
       .recommend-item
         display: inline-block
         vertical-align: top
@@ -47,6 +48,7 @@
           width: 100%
           border-radius: pxToRem(8)
         .recommend-name
+          white-space: normal
           margin: 0
           padding-top: pxToRem(5)
           font-size: pxToRem(12)
