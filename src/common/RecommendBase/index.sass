@@ -1,0 +1,30 @@
+@import "../../style/variable"
+@import "../../style/helper"
+
+.found-content
+  position: relative
+  @include setPadding(top, (top: pxToRem(10)))
+  .found-description
+    padding-top: pxToRem(2)
+    display: flex
+    justify-content: space-between
+    align-items: center
+    @include setPadding(right, pxToRem(16))
+    .found-title
+      font:
+        size: pxToRem(16)
+        family: 幼圆
+        weight: bold
+      color: $recommend_title_text_color
+      letter-spacing: pxToRem(1)
+    .found-more
+      color: $recommend_more_text_color
+      font-size: pxToRem(12)
+      padding: pxToRem(4) pxToRem(10)
+      @include thinBorder((top, right, bottom, left), $recommend_more_border_color, pxToRem(10))
+  .found-playlist
+    font:
+      size: pxToRem(12)
+      weight: lighter
+    color: $recommend_playlist_text_color
+    letter-spacing: pxToRem(1)
