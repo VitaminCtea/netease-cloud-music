@@ -71,3 +71,81 @@ function getDigits(integer: number) {
     }
     return digit
 }
+
+export function on(el: any, eventName: string, callback: (e: Event) => void, opts: { capture: boolean; passive: boolean } | boolean = false) {
+    if (el.addEventListener) {
+        el.addEventListener(eventName, callback, opts);
+    } else if (el.attachEvent) {
+        el.attachEvent(`on${eventName}`, (e: Event) => {
+            callback.call(el, e || window.event)
+        });
+    }
+}
+
+export function off(el: any, eventName: string, callback: (e: Event) => void, opts: { capture: boolean; passive: boolean } | boolean = false) {
+    if (el.removeEventListener) {
+        el.removeEventListener(eventName, callback, opts)
+    } else if (el.detachEvent) {
+        el.detachEvent(`on${eventName}`, callback)
+    }
+}
+
+export function throttle(fn: (...args: any) => any, threshold: number = 250, context?: any) {
+    let last: number
+    let deferTimer: number
+    return function (this: null) {
+        context = context || this
+        let now = +new Date()
+        let args = arguments
+        if (last && now < last + threshold) {
+            clearTimeout(deferTimer)
+            deferTimer = setTimeout(() => {
+                last = now
+                fn.apply(context, args as any)
+            }, threshold)
+        } else {
+            last = now
+            fn.apply(context, args as any)
+        }
+    }
+}
+
+export function debounce(func: (...args: any[]) => any, wait: number, immediate?: boolean) {
+    let timeout: number | null
+    let args: any
+    let context: any
+    let timestamp: number
+    let result: any
+    const later = function later() {
+        const last = +(new Date()) - timestamp
+        if (last < wait && last >= 0) {
+            timeout = setTimeout(later, wait - last)
+        } else {
+            timeout = null
+            if (!immediate) {
+                result = func.apply(context, args)
+                if (!timeout) {
+                    context = null
+                    args = null
+                }
+            }
+        }
+    }
+    return function debounced(this: null) {
+        context = this
+        args = arguments
+        timestamp = +(new Date())
+        const callNow = immediate && !timeout
+        if (!timeout) timeout = setTimeout(later, wait)
+        if (callNow) {
+            result = func.apply(context, args)
+            context = null
+            args = null
+        }
+        return result
+    }
+}
+
+export const isString = (str: any): str is string => typeof str === 'string'
+
+export const random = (start: number, end: number) => Math.floor(Math.random() * (end - start + 1) + start)
