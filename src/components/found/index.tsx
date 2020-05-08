@@ -1,14 +1,23 @@
 import React from "react"
-import Header from "./Header"
 import Carousel from "./Carousel"
 import Type from './Type'
-import Recommend from "./Recommend"
+import Recommend from "./RecommendPlaylist"
+import RecommendNewMusic from "./RecommendNewMusic"
+import HotWindVane from "../HotWindVane"
+import './index.sass'
 
 export default () => (
-    <>
-        <Header />
-        <Carousel type={ '2' }/>
-        <Type />
-        <Recommend quantity={ '6' }/>
-    </>
+    <div className={ 'found-scroll-container' }>
+        <div className={ 'found-scroll-content' }>
+            <div className={ 'container-padding' }>
+                <Carousel type={ '2' }/>
+                <Type />
+            </div>
+            <div className={ 'recommend-container-padding' }>
+                <Recommend quantity={ '6' }/>
+                <RecommendNewMusic />
+                <HotWindVane />
+            </div>
+        </div>
+    </div>
 )

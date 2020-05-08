@@ -1,51 +1,80 @@
-@import "src/style/helper"
-@import "src/style/variable"
+@import "../../style/helper"
+@import "../../style/variable"
 
-.container
-  display: flex
-  justify-content: space-between
-  align-items: center
-  font-size: pxToRem(14)
-  margin-bottom: pxToRem(30)
-  .main
-    grid-column: 2
+.header
+  height: pxToRem(50)
+  border: 1px solid red
+  overflow: hidden
+  .container
+    position: fixed
+    top: 0
+    left: 0
+    right: 0
     display: flex
-    justify-content: center
+    justify-content: space-between
     align-items: center
-    .content
-      margin-right: pxToRem(20)
-      .link, .defaultActive
-        text-decoration: none
-        color: $text_color
-      &:last-child
-        margin-right: 0
-  .menu
-    overflow: hidden
-    .menuIcon
-      display: inline-block
-      width: pxToRem(22)
-      height: pxToRem(2)
-      @include thinBorder(top, $icon_menu_color, 2px)
-      @include thinBorder(bottom, $icon_menu_color, 2px)
-      //border-top: calcRect(2) solid $icon_menu_color
-      //border-bottom: calcRect(2) solid $icon_menu_color
-      background-color: $icon_menu_color
-      padding: pxToRem(5) 0
-      background-clip: content-box
-  .search
-    .searchIcon
-      position: relative
-      width: pxToRem(15)
-      height: pxToRem(15)
-      border: pxToRem(2) solid $icon_search_color
-      border-radius: 50%
-      transform: rotate(45deg)
-      &:after
-        content: ''
-        position: absolute
-        right: pxToRem(-6)
-        top: 50%
-        transform: translateY(-50%)
-        width: pxToRem(6)
+    font-size: pxToRem(14)
+    box-sizing: border-box
+    z-index: 2
+    background-color: $header_background_color
+    @include setPadding((left, right), pxToRem(16))
+    .main
+      display: flex
+      justify-content: center
+      align-items: center
+      .header-href-container
+        overflow: hidden
+        .href-content
+          width: pxToRem(32)
+          height: pxToRem(32)
+          line-height: pxToRem(32)
+          text-align: center
+          display: inline-block
+          vertical-align: middle
+          margin-right: 10px
+          @include setPadding((top, right, bottom, left), pxToRem(10))
+          border-radius: 50%
+          .link, .defaultActive
+            display: inline-block
+            width: 100%
+            height: 100%
+            border-radius: 50%
+            transition: font-size .3s
+            text-decoration: none
+            color: $text_color
+          .defaultActive
+            font:
+              size: 16px
+              weight: bolder
+            color: $header_href_color
+          &:last-child
+            margin-right: 0
+    .icon-menu-container
+      overflow: hidden
+      .icon-menu
+        display: inline-block
+        width: pxToRem(22)
         height: pxToRem(2)
-        background-color: $icon_search_color
+        border-top: 2px solid $icon_menu_color
+        border-bottom: 2px solid $icon_menu_color
+        background-color: $icon_menu_color
+        padding: pxToRem(5) 0
+        background-clip: content-box
+    .search
+      .searchIcon
+        display: inline-block
+        position: relative
+        width: pxToRem(15)
+        height: pxToRem(15)
+        border: 2px solid $icon_search_color
+        border-radius: 50%
+        transform: rotate(45deg)
+        &:after
+          content: ''
+          position: absolute
+          right: pxToRem(-6)
+          top: 50%
+          transform: translateY(-50%)
+          width: pxToRem(6)
+          height: pxToRem(2)
+          background-color: $icon_search_color

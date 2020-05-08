@@ -1,11 +1,12 @@
 import React from 'react'
-import Found from "components/found/index"
+import Header from "./Header"
+import './App.sass'
 import '../index.css'
 
 function App() {
     return (
-        <div>
-            <Found />
+        <div className={ 'found' }>
+            <Header />
         </div>
     )
 }

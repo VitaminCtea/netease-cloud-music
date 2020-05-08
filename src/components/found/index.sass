@@ -1,0 +1,13 @@
+@import "../../style/helper"
+
+.found-scroll-container
+  height: 100%
+  overflow-x: hidden
+  .found-scroll-content
+    overflow-y: auto
+    &::-webkit-scrollbar
+      display: none
+    .container-padding
+      @include setPadding((left, top, right), (left: pxToRem(16), top: pxToRem(6), right: pxToRem(16)))
+    .recommend-container-padding
+      @include setPadding(left, pxToRem(16))

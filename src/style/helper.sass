@@ -6,10 +6,10 @@
 @mixin borderNth($radius, $index: 1)
   border-radius: nth($radius, 1) * $index nth($radius, 2) * $index nth($radius, 3) * $index nth($radius, 4) * $index
 
-@mixin thinBorder($directionMaps: bottom, $color: #ccc, $width: 1px, $radius: (0, 0, 0, 0), $position: after)
+@mixin thinBorder($directionMaps: bottom, $color: #ccc, $radius: (0, 0, 0, 0), $position: after)
   $directionMaps: if(list == type-of($directionMaps), $directionMaps, ($directionMaps))
   @each $directionMap in $directionMaps
-    border-#{$directionMap}: $width solid $color
+    border-#{$directionMap}: 1px solid $color
 
   @if list == type-of($radius)
     @include borderNth($radius)
@@ -36,7 +36,7 @@
       pointer-events: none
       border: 0 solid $color
       @each $directionMap in $directionMaps
-        border-#{ $directionMap }-width: $width
+        border-#{ $directionMap }-width: .5px
       @if (list == type-of($radius))
         @include borderNth($radius, 2)
       @else
@@ -53,7 +53,7 @@
       transform: scale(0.3333)
 
 @mixin horizontal-center($position: absolute)
-  $position-type-list: (absolute, relative)
+  $position-type-list: (absolute, relative, fixed)
   @if index($position-type-list, $position) != null
     position: $position
     top: 50%
@@ -64,3 +64,28 @@
 
 @mixin icon-background-highlight
   background-image: linear-gradient(to right, rgba(255, 255, 255, $icon_background_highLight), $official_color, $official_color, $official_color)
+
+@mixin setPadding($directionMaps: bottom, $values: (top: 0, right: 0, bottom: 0, left: 0))
+  $directionMaps: if(list == type-of($directionMaps), $directionMaps, ($directionMaps))
+  @if type-of($values) != list
+    @each $direction in $directionMaps
+      @if type_of($values) != map
+        padding-#{$direction}: $values
+      @else if(map-has-key($values, $direction))
+        padding-#{$direction}: map_get($values, $direction)
+  @else
+    padding: 0
+
+@mixin set_image($selector)
+  &:after
+    content: ''
+    display: block
+    padding-top: 100%
+  .#{$selector}
+    position: absolute
+    top: 0
+    left: 0
+    width: 100%
+    height: 100%
+    object-fit: cover
+    border-radius: 8px

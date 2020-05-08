@@ -1,74 +1,59 @@
 @import "../../../style/variable"
 @import "../../../style/helper"
-@import "style.css"
 
 .recommend-container
-  margin-top: pxToRem(10)
+  min-height: 1px
+  overflow: hidden
   .recommend-playlist
     font:
       size: pxToRem(12)
       weight: lighter
     color: $recommend_playlist_text_color
     letter-spacing: pxToRem(1)
-  .recommend-content
-    position: relative
-    .recommend-description
-      padding-top: pxToRem(2)
-      display: flex
-      justify-content: space-between
-      align-items: center
-      .recommend-title
-        font:
-          size: pxToRem(16)
-          family: 幼圆
-          weight: bold
-        color: $recommend_title_text_color
-        letter-spacing: pxToRem(1)
-      .recommend-more
-        color: $recommend_more_text_color
-        font-size: pxToRem(12)
-        padding: pxToRem(4) pxToRem(10)
-        @include thinBorder((top, right, bottom, left), $recommend_more_border_color, 1px, (10px, 10px, 10px, 10px))
+  .recommend-scroll-container
+    overflow-x: auto
+    @include setPadding((top, bottom), pxToRem(14))
+    &::-webkit-scrollbar
+      display: none
     .recommend-details
-      padding-top: pxToRem(14)
-      white-space: nowrap
+      display: flex
+      align-items: flex-start
+      .recommend-placeholder
+        @include setPadding(top, (top: 38.68219895287958%))
       .recommend-item
-        display: inline-block
-        vertical-align: top
-        position: relative
-        width: pxToRem(120)
-        word-break: break-word
+        flex: 0 0 29%
         margin-right: pxToRem(10)
-        border-radius: pxToRem(8)
+        border-radius: 8px
         overflow: hidden
         &:last-child
-          margin-right: 0
-        .recommend-image
-          display: block
-          width: 100%
-          border-radius: pxToRem(8)
-        .recommend-name
-          white-space: normal
-          margin: 0
-          padding-top: pxToRem(5)
-          font-size: pxToRem(12)
-          line-height: pxToRem(16)
-        .recommend-playlist-container
-          position: absolute
-          top: 0
-          right: 0
-          width: 100%
-          padding-bottom: 20%
-          background-image: linear-gradient(to bottom, rgba(0, 0, 0, .2), transparent)
-          .recommend-playCount
+          @include setPadding(right, pxToRem(16))
+        .recommend-playlist-media
+          position: relative
+          @include set_image(recommend-image)
+          .recommend-playlist-container
             position: absolute
-            top: pxToRem(4)
-            right: pxToRem(4)
-            display: flex
-            justify-content: space-between
-            align-items: center
-            .icon-recommend-play
-              font-size: pxToRem(18)
-            .count
-              font-size: pxToRem(12)
-              color: $recommend_playlist_count_color
+            top: 0
+            right: 0
+            width: 100%
+            padding-bottom: 20%
+            background-image: linear-gradient(to bottom, rgba(0, 0, 0, .2), transparent)
+            .recommend-playCount
+              position: absolute
+              top: pxToRem(4)
+              right: pxToRem(4)
+              display: flex
+              justify-content: space-between
+              align-items: center
+              .icon-play
+                font-size: pxToRem(14)
+              .count
+                font-size: pxToRem(12)
+                color: $recommend_playlist_count_color
+        .recommend-text
+          font-size: 0
+          .recommend-name
+            white-space: normal
+            margin: 0
+            @include setPadding(top, (top: pxToRem(5)))
+            font-size: pxToRem(12)
+            line-height: pxToRem(16)

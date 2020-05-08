@@ -10,7 +10,8 @@
       "containers": ["src/containers"],
       "helper": ["src/helper"],
       "icon": ["src/icon"],
-      "reducers": ["src/reducers"]
+      "reducers": ["src/reducers"],
+      "hooks": ["src/hooks"]
     }
   }
 }
