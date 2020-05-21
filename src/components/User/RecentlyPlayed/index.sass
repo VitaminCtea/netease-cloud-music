@@ -1,0 +1,64 @@
+@import "../../../style/variable"
+@import "../../../style/helper"
+
+.recent-play-container
+  @include setPadding((left, right, top, bottom), (left: pxToRem(16), right: pxToRem(16), top: 0, bottom: pxToRem(10)))
+  .recent-play-header
+    display: flex
+    justify-content: space-between
+    align-items: center
+    font-size: 0
+    @include setPadding((top, bottom), pxToRem(12))
+    .recent-play-header-text, .recent-play-header-more
+      font-size: 12px
+  .recent-play-content
+    display: flex
+    justify-content: space-between
+    align-items: center
+    .recent-play-item
+      flex: 0 0 50%
+      display: flex
+      align-items: center
+      .recent-play-image-container
+        position: relative
+        width: pxToRem(55)
+        height: pxToRem(55)
+        @include thinBorder((top, bottom, left, right))
+        border-radius: 8px
+        .recent-play-image
+          position: absolute
+          left: 0
+          top: 0
+        i
+          position: absolute
+          left: 50%
+          top: 50%
+          font-size: 12px
+          transform: translate(-50%, -50%)
+      .recent-play-description
+        flex: 1
+        display: flex
+        flex-direction: column
+        align-items: flex-start
+        font-size: 0
+        @include setPadding(left, pxToRem(10))
+        .play-all, .play-count
+          font-size: 12px
+        .play-all
+          margin-bottom: pxToRem(6)
+        .play-count
+          color: $play_count_text_color
+          @extend %scale
+      .recent-video-description
+        @include setPadding(left, pxToRem(10))
+        flex: 1
+        min-width: 0
+        font-size: 0
+        .recent-video-description-text
+          overflow : hidden
+          text-overflow: ellipsis
+          display: -webkit-box
+          -webkit-line-clamp: 2
+          -webkit-box-orient: vertical
+          font-size: 12px
+          line-height: pxToRem(14)

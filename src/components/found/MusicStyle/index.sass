@@ -1,0 +1,57 @@
+@import "../../../style/variable"
+@import "../../../style/helper"
+
+.newMusic-container
+  .newMusic-content
+    display: inline-block
+    white-space: nowrap
+    padding-top: pxToRem(14)
+    overflow-x: auto
+    transform: translate3d(0, 0, 0)
+    .newMusic-group
+      width: 98%
+      display: inline-block
+      vertical-align: middle
+      overflow: hidden
+      margin-right: pxToRem(20)
+      box-sizing: border-box
+      .newMusic-item
+        width: 100%
+        display: flex
+        justify-content: space-between
+        align-items: center
+        @include setPadding((right, bottom), (bottom: pxToRem(10)))
+        &:last-child
+          @include setPadding(bottom)
+        .newMusic-image-container
+          flex-shrink: 0
+          position: relative
+          display: inline-block
+          width: pxToRem(70)
+          height: pxToRem(70)
+          border-radius: 8px
+          overflow: hidden
+          @include set_image(newMusic-image)
+        .newMusic-right-container
+          flex: 1
+          min-width: 0
+          display: flex
+          justify-content: space-between
+          align-items: center
+          @include setPadding(left, (left: pxToRem(10)))
+          .newMusic-info
+            flex: 1
+            min-width: 0
+            font-size: pxToRem(12)
+            @include setPadding(right, pxToRem(10))
+            .newMusic-name
+              display: block
+              white-space: nowrap
+              overflow: hidden
+              text-overflow: ellipsis
+              @include setPadding(bottom, (bottom: pxToRem(6)))
+          .icon-newMusic-play-container
+            display: inline-block
+            position: relative
+            .icon-musicStyle-borderPlay, .icon-musicStyle-disable
+              font-size: pxToRem(30)

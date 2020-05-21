@@ -1,0 +1,71 @@
+@import "../../../style/variable"
+@import "../../../style/helper"
+
+.user-info-container
+  @include setPadding((top, bottom, left, right), (top: pxToRem(26), bottom: pxToRem(20), left: pxToRem(16), right: pxToRem(16)))
+  .user-info-content
+    display: flex
+    justify-content: space-between
+    align-items: center
+    font-size: 0
+    color: $user_info_color
+    %fontSize
+      font-size: 12px
+    .user-details
+      display: flex
+      align-items: center
+      .user-avatar-container
+        margin-right: pxToRem(12)
+        position: relative
+        width: pxToRem(46)
+        height: pxToRem(46)
+        border-radius: 50%
+        overflow: hidden
+        background-color: lightsalmon
+        .user-avatar
+          width: 100%
+          position: absolute
+          left: 0
+          top: 0
+      .user-description
+        display: flex
+        flex-direction: column
+        justify-content: center
+        .notLogin
+          font-size: 12px
+        .user-name
+          font-size: 12px
+        .user-exclusive
+          display: flex
+          align-items: center
+          margin-top: pxToRem(6)
+          overflow: hidden
+          .vinyl-container
+            margin-right: pxToRem(6)
+            background-color: rgba(57, 57, 57, .7)
+            @include setPadding((top, bottom, left, right), (top: pxToRem(2), bottom: pxToRem(2), left: pxToRem(4), right: pxToRem(4)))
+            border-radius: 10px
+            text-align: center
+            .vinyl
+              display: inline-block
+              @extend %fontSize
+              @extend %scale
+              color: $user_vinyl_color
+          .user-level-container
+            background-color: rgba(100,149,237, .8)
+            border-radius: 10px
+            @include setPadding((top, bottom, left, right), (top: pxToRem(2), bottom: pxToRem(2), left: pxToRem(6), right: pxToRem(6)))
+            @extend %scale
+            .user-level
+              display: inline-block
+              @extend %fontSize
+    .open-vip
+      @extend %scale
+      @extend %fontSize
+      letter-spacing: 1px
+      color: $user_open_vip_color
+    .loginImmediately
+      display: inline-block
+      font-size: 12px
+      @include setPadding((top, bottom, left, right), (top: pxToRem(6), bottom: pxToRem(6), left: pxToRem(12), right: pxToRem(12)))
+      @include thinBorder((top, bottom, left, right), $login_border_color, (20px))

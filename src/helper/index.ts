@@ -1,6 +1,6 @@
 export function padZero(num: number, digits: number = 2) {
-    const convertString = num + ''
-    return '0000'.substr(0, digits - convertString.length) + convertString
+  const convertString = num + "";
+  return "0000".substr(0, digits - convertString.length) + convertString;
 }
 
 /**
@@ -26,126 +26,220 @@ export function padZero(num: number, digits: number = 2) {
  * 拿到这些的东西, 再对这个几亿进行查看位数, 如果位数小于3, 和前面的过程一样
  * 如: 100000000(1亿) -> 1000000(1百万) -> 100 -> 结果为1亿
  * */
-export function addChineseUnit(digital: number, isFloor: boolean = true, decimalDigit: number = 2) {
-    const integer = Math.floor(digital)
-    const digit = getDigits(integer)
-    const UNIT = '亿'
-    let result = ''
-    if (digit > 3) {
-        const multiple = Math.floor(digit / 8)
-        if (multiple >= 1) {
-            const temp = Math.round(integer / Math.pow(10, 8 * multiple))
-            result += addUnit(temp, digital, isFloor, 8 * multiple, decimalDigit)
-            isFloor && (result = Math.floor(+result) + '')
-            for (let i: number = 0; i < multiple; i++) {
-                result += UNIT
-            }
-            return result
-        } else {
-            return addUnit(integer, digital, isFloor, 0, decimalDigit)
-        }
+export function addChineseUnit(
+  digital: number,
+  isFloor: boolean = true,
+  decimalDigit: number = 2
+) {
+  const integer = Math.floor(digital);
+  const digit = getDigits(integer);
+  const UNIT = "亿";
+  let result = "";
+  if (digit > 3) {
+    const multiple = Math.floor(digit / 8);
+    if (multiple >= 1) {
+      const temp = Math.round(integer / Math.pow(10, 8 * multiple));
+      result += addUnit(temp, digital, isFloor, 8 * multiple, decimalDigit);
+      isFloor && (result = Math.floor(+result) + "");
+      for (let i: number = 0; i < multiple; i++) {
+        result += UNIT;
+      }
+      return result;
     } else {
-        return digital + ''
+      return addUnit(integer, digital, isFloor, 0, decimalDigit);
     }
+  } else {
+    return digital + "";
+  }
 }
 
-function addUnit(integer: number, number: number, isFloor: boolean, multiple: number, decimalDigit: number) {
-    const digit = getDigits(integer)
-    const UNIT = '万'
-    if (digit > 3) {
-        let remainder = digit % 8
-        if (remainder >= 5) remainder = 4
-        const result = Math.round(number / Math.pow(10, remainder + multiple - decimalDigit)) / Math.pow(10, decimalDigit)
-        return isFloor ? Math.floor(result) + UNIT : result + UNIT
-    } else {
-        const result = Math.round(number / Math.pow(10, multiple - decimalDigit)) / Math.pow(10, decimalDigit)
-        return isFloor ? Math.floor(result) : result
-    }
+function addUnit(
+  integer: number,
+  number: number,
+  isFloor: boolean,
+  multiple: number,
+  decimalDigit: number
+) {
+  const digit = getDigits(integer);
+  const UNIT = "万";
+  if (digit > 3) {
+    let remainder = digit % 8;
+    if (remainder >= 5) remainder = 4;
+    const result =
+      Math.round(number / Math.pow(10, remainder + multiple - decimalDigit)) /
+      Math.pow(10, decimalDigit);
+    return isFloor ? Math.floor(result) + UNIT : result + UNIT;
+  } else {
+    const result =
+      Math.round(number / Math.pow(10, multiple - decimalDigit)) /
+      Math.pow(10, decimalDigit);
+    return isFloor ? Math.floor(result) : result;
+  }
 }
 
 function getDigits(integer: number) {
-    let digit = -1
-    while (integer >= 1) {
-        digit++
-        integer /= 10
-    }
-    return digit
+  let digit = -1;
+  while (integer >= 1) {
+    digit++;
+    integer /= 10;
+  }
+  return digit;
 }
 
-export function on(el: any, eventName: string, callback: (e: Event) => void, opts: { capture: boolean; passive: boolean } | boolean = false) {
-    if (el.addEventListener) {
-        el.addEventListener(eventName, callback, opts);
-    } else if (el.attachEvent) {
-        el.attachEvent(`on${eventName}`, (e: Event) => {
-            callback.call(el, e || window.event)
-        });
-    }
+export function on(
+  el: any,
+  eventName: string,
+  callback: (e: Event) => void,
+  opts: { capture: boolean; passive: boolean } | boolean = false
+) {
+  if (el.addEventListener) {
+    el.addEventListener(eventName, callback, opts);
+  } else if (el.attachEvent) {
+    el.attachEvent(`on${eventName}`, (e: Event) => {
+      callback.call(el, e || window.event);
+    });
+  }
 }
 
-export function off(el: any, eventName: string, callback: (e: Event) => void, opts: { capture: boolean; passive: boolean } | boolean = false) {
-    if (el.removeEventListener) {
-        el.removeEventListener(eventName, callback, opts)
-    } else if (el.detachEvent) {
-        el.detachEvent(`on${eventName}`, callback)
-    }
+export function off(
+  el: any,
+  eventName: string,
+  callback: (e: Event) => void,
+  opts: { capture: boolean; passive: boolean } | boolean = false
+) {
+  if (el.removeEventListener) {
+    el.removeEventListener(eventName, callback, opts);
+  } else if (el.detachEvent) {
+    el.detachEvent(`on${eventName}`, callback);
+  }
 }
 
-export function throttle(fn: (...args: any) => any, threshold: number = 250, context?: any) {
-    let last: number
-    let deferTimer: number
-    return function (this: null) {
-        context = context || this
-        let now = +new Date()
-        let args = arguments
-        if (last && now < last + threshold) {
-            clearTimeout(deferTimer)
-            deferTimer = setTimeout(() => {
-                last = now
-                fn.apply(context, args as any)
-            }, threshold)
-        } else {
-            last = now
-            fn.apply(context, args as any)
+export function throttle(
+  fn: (...args: any) => any,
+  threshold: number = 250,
+  context?: any
+) {
+  let last: number;
+  let deferTimer: number;
+  return function (this: null) {
+    context = context || this;
+    let now = +new Date();
+    let args = arguments;
+    if (last && now < last + threshold) {
+      clearTimeout(deferTimer);
+      deferTimer = setTimeout(() => {
+        last = now;
+        fn.apply(context, args as any);
+      }, threshold);
+    } else {
+      last = now;
+      fn.apply(context, args as any);
+    }
+  };
+}
+
+export function debounce(
+  func: (...args: any[]) => any,
+  wait: number,
+  immediate?: boolean
+) {
+  let timeout: number | null;
+  let args: any;
+  let context: any;
+  let timestamp: number;
+  let result: any;
+  const later = function later() {
+    const last = +new Date() - timestamp;
+    if (last < wait && last >= 0) {
+      timeout = setTimeout(later, wait - last);
+    } else {
+      timeout = null;
+      if (!immediate) {
+        result = func.apply(context, args);
+        if (!timeout) {
+          context = null;
+          args = null;
         }
+      }
     }
+  };
+  return function debounced(this: null) {
+    context = this;
+    args = arguments;
+    timestamp = +new Date();
+    const callNow = immediate && !timeout;
+    if (!timeout) timeout = setTimeout(later, wait);
+    if (callNow) {
+      result = func.apply(context, args);
+      context = null;
+      args = null;
+    }
+    return result;
+  };
 }
 
-export function debounce(func: (...args: any[]) => any, wait: number, immediate?: boolean) {
-    let timeout: number | null
-    let args: any
-    let context: any
-    let timestamp: number
-    let result: any
-    const later = function later() {
-        const last = +(new Date()) - timestamp
-        if (last < wait && last >= 0) {
-            timeout = setTimeout(later, wait - last)
-        } else {
-            timeout = null
-            if (!immediate) {
-                result = func.apply(context, args)
-                if (!timeout) {
-                    context = null
-                    args = null
-                }
-            }
-        }
-    }
-    return function debounced(this: null) {
-        context = this
-        args = arguments
-        timestamp = +(new Date())
-        const callNow = immediate && !timeout
-        if (!timeout) timeout = setTimeout(later, wait)
-        if (callNow) {
-            result = func.apply(context, args)
-            context = null
-            args = null
-        }
-        return result
-    }
+export const isString = (str: any): str is string => typeof str === "string";
+
+export const random = (start: number, end: number) =>
+  Math.floor(Math.random() * (end - start + 1) + start);
+
+export function hasClassName(el: HTMLElement, className: string) {
+  const classNameRegex = new RegExp("(^|\\s+)" + className + "(\\s+|$)", "g");
+  return classNameRegex.test(el.className);
 }
 
-export const isString = (str: any): str is string => typeof str === 'string'
+export function addClassName(el: HTMLElement, className: string) {
+  if (hasClassName(el, className)) return;
+  const elementClassName = el.className;
+  const classNames = elementClassName.split(" ");
+  classNames.push(className);
+  el.className = classNames.join(" ");
+}
 
-export const random = (start: number, end: number) => Math.floor(Math.random() * (end - start + 1) + start)
+export function removeClassName(el: HTMLElement, className: string) {
+  if (!hasClassName(el, className)) return;
+  const classNames = el.className.split(" ");
+  const index = classNames.findIndex((name: string) => name === className);
+  if (index !== -1) {
+    classNames.splice(index, 1);
+  }
+  el.className = classNames.join(" ");
+}
+
+function swap(index1: number, index2: number, list: any[]) {
+  [list[index1], list[index2]] = [list[index2], list[index1]];
+}
+
+export function shuffle(arr: any[]) {
+  const list = arr.slice();
+  for (let i: number = 0; i < list.length; i++) {
+    const randomIndex = random(0, i);
+    swap(i, randomIndex, list);
+  }
+  return list;
+}
+
+type LyricResultArray = { time: number; txt: string }[];
+export function parsingLyrics(lyric: string) {
+  if (lyric == null || !lyric.length) return [];
+  const arr = lyric.split(/[\n\r]/);
+  const timeRegex = /\[(\d{2}):(\d{2})(?:\.\d+)?\]/;
+  return arr
+    .reduce((result: LyricResultArray, current: string) => {
+      const matchingTime = timeRegex.exec(current);
+      if (matchingTime) {
+        const txt = current.replace(timeRegex, "").trim();
+        if (txt) {
+          result.push({
+            time: (matchingTime[1] as any) * 60 + +matchingTime[2],
+            txt,
+          });
+        }
+      }
+      return result;
+    }, [])
+    .sort((a, b) => a.time - b.time);
+}
+
+export const hasOwnProperty = <O, K extends string>(obj: O, key: K) =>
+  Object.prototype.hasOwnProperty.call(obj, key);

@@ -1,0 +1,69 @@
+@import "../../style/variable"
+@import "../../style/helper"
+
+.login-container
+  position: fixed
+  top: 0
+  left: 0
+  right: 0
+  bottom: 0
+  background-color: $login_background_color
+  z-index: 2
+  .login-content
+    overflow: hidden
+    .logo
+      width: pxToRem(70)
+      height: pxToRem(70)
+      background-image: url("https://s3.music.126.net/mobile-new/img/circle_logo.png?9647b494bc57cc5d76081bee7c12ad00=")
+      background-size: contain
+      background-repeat: no-repeat
+      margin: pxToRem(130) auto auto auto
+    .login-form
+      position: absolute
+      left: 50%
+      bottom: pxToRem(20)
+      transform: translateX(-50%)
+      width: 100%
+      display: flex
+      flex-direction: column
+      align-items: center
+      @include setPadding((top, left, right, bottom), (top: pxToRem(6), left: pxToRem(10), right: pxToRem(10), bottom: pxToRem(6)))
+      margin: 0
+      .login-phone-container, .login-password-container
+        width: 60%
+        display: flex
+        align-items: center
+        position: relative
+        .icon-login-phone, .icon-login-password
+          position: absolute
+          left: 4px
+          top: 50%
+          transform: translateY(-50%)
+          font-size: 22px
+        #login-phone, #login-password
+          width: 100%
+          @include thinBorder((top, left, right, bottom), #fff)
+          border-radius: 10px
+          outline: none
+          text-indent: 18px
+          @include setPadding((top, left, right, bottom), (top: pxToRem(6), left: pxToRem(10), right: pxToRem(10), bottom: pxToRem(6)))
+          &::-webkit-input-placeholder
+            font-size: 12px
+            color: #000
+      .login-phone-container
+        margin-bottom: pxToRem(10)
+      .login-password-container
+        .password-placeholder
+          display: inline-block
+          visibility: hidden
+      .login-button
+        display: block
+        width: 50%
+        border: none
+        outline: none
+        background-color: #fff
+        font-size: 12px
+        margin-top: 30px
+        border-radius: 20px
+        color: $official_color
+        @include setPadding((top, left, right, bottom), (top: pxToRem(10), left: pxToRem(16), right: pxToRem(16), bottom: pxToRem(10)))
