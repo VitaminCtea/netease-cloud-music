@@ -1,0 +1,241 @@
+@import "../../style/variable"
+@import "../../style/helper"
+
+%full
+  top: 0
+  left: 0
+  right: 0
+  bottom: 0
+.player-container
+  .normal-player
+    position: fixed
+    @extend %full
+    background-color: $normal_player_background_color
+    z-index: 200
+    color: $normal_player_color
+    @include setPadding((left, right), pxToRem(20))
+    overflow: hidden
+    filter: brightness(94%)
+    .background-virtualization
+      position: absolute
+      @extend %full
+      background-repeat: no-repeat
+      background-size: 100% 100%
+      background-position: 0 80px
+      filter: blur(180px)
+      z-index: -1
+    .normal-player-header
+      display: flex
+      justify-content: space-between
+      align-items: center
+      @include setPadding((top, bottom), pxToRem(16))
+      %flex
+        flex: 1
+        min-width: 0
+      .normal-player-header-left
+        @extend %flex
+        display: flex
+        align-items: center
+        @include setPadding(right, pxToRem(20))
+        .icon-back
+          font-size: pxToRem(30)
+          margin-right: pxToRem(10)
+        .normal-player-song-details
+          @extend %flex
+          font-size: 0
+          display: flex
+          flex-direction: column
+          .normal-player-song
+            overflow: hidden
+            text-overflow: ellipsis
+            white-space: nowrap
+            font-size: pxToRem(14)
+            margin-bottom: pxToRem(4)
+          .normal-player-singer
+            font-size: pxToRem(12)
+            color: $normal_player_singer_color
+      .normal-player-header-right
+        .icon-share
+          font-size: pxToRem(28)
+    .singing-arm-container
+      position: relative
+      height: pxToRem(66)
+      .singing-arm-content
+        width: pxToRem(100)
+        height: pxToRem(135)
+        background-image: url("https://s3.music.126.net/mobile-new/img/needle.png?702cf6d95f29e2e594f53a3caab50e12=")
+        background-size: contain
+        background-repeat: no-repeat
+        position: absolute
+        left: 44%
+        right: 0
+        z-index: 101
+    .record-container
+      position: relative
+      width: pxToRem(342)
+      height: pxToRem(342)
+      margin: 0 auto
+      %position
+        position: absolute
+        @extend %full
+        background-repeat: no-repeat
+        background-size: contain
+      .record-negative
+        @extend %position
+        background-image: url("https://s3.music.126.net/mobile-new/img/disc.png?d3bdd1080a72129346aa0b4b4964b75f=")
+      .record-negativeHighlight
+        @extend %position
+        background-image: url("https://s3.music.126.net/mobile-new/img/disc_light-plus.png?4392c8c9a8a33d4b2b2c33d3995503c9=")
+        z-index: 3
+      .record-songPicture-container
+        width: pxToRem(214)
+        height: pxToRem(214)
+        position: absolute
+        top: 50%
+        left: 50%
+        transform: translate(-50%, -50%)
+        overflow: hidden
+        border-radius: 50%
+        .record-songPicture-content
+          height: 100%
+          position: relative
+          background-image: url("https://s3.music.126.net/mobile-new/img/disc_default.png?7c9b3adc16f5485c2bfbe8a540534188=")
+          background-size: contain
+          .record-songPicture
+            width: 100%
+            position: absolute
+            @extend %full
+  .normal-player-bottom-container
+    position: absolute
+    bottom: 0
+    left: 0
+    right: 0
+    @include setPadding((left, right), pxToRem(20))
+    .normal-player-bottom-top, .normal-player-progress, .control-songs-container
+      display: flex
+      justify-content: space-around
+      align-items: center
+      .icon-player-favorite, .icon-player-download, .icon-player-comment, .icon-player-info, .icon-vip
+        font-size: pxToRem(24)
+        &:before
+          color: $normal_player_icons_color
+      .icon-vip
+        font-size: pxToRem(26)
+    .normal-player-bottom-top
+      margin: pxToRem(24) 0
+    .normal-player-progress
+      font-size: 0
+      .normal-player-startTime, .normal-player-endTime
+        font-size: pxToRem(12)
+      .normal-player-startTime
+        margin-right: pxToRem(12)
+        color: $normal_player_startTime_color
+      .normal-player-endTime
+        margin-left: pxToRem(12)
+        color: $normal_player_endTime_color
+      .normal-player-progress-background
+        position: relative
+        flex: 1
+        height: pxToRem(2)
+        background-color: $normal_player_progress_background
+        .normal-player-progress-percent
+          width: 0
+          height: 100%
+          background-color: $normal_player_progress_percent
+        .normal-player-progress-ball
+          position: absolute
+          top: 50%
+          left: 0
+          transform: translateY(-50%)
+          width: 10px
+          height: 10px
+          background-color: $normal_player_progress_ball_background
+          border-radius: 50%
+          touch-action: none
+    .control-songs-container
+      margin: pxToRem(30) 0
+      .icon-player-randomPlay, .icon-player-prevSong, .icon-player-nextSong, .icon-normalPlayer_playlist, .icon-player-listCirculation, .icon-player-singleCirculation
+        font-size: pxToRem(22)
+        &:before
+          color: $normal_player_icons_color
+      .icon-player-play, .icon-player-pause
+        font-size: pxToRem(40)
+  .mini-player
+    position: fixed
+    left: 0
+    right: 0
+    bottom: 0
+    z-index: 20
+    display: flex
+    justify-content: space-between
+    align-items: center
+    @include setPadding((left, right, top, bottom), (left: pxToRem(10), right: pxToRem(10), top: pxToRem(8), bottom: pxToRem(8)))
+    background-color: $mini_player_background_color
+    box-shadow: 0 -.1px 1px #ccc
+    .mini-player-songs-details
+      flex: 1
+      min-width: 0
+      display: flex
+      align-items: center
+      .mini-player-image-container
+        position: relative
+        width: pxToRem(40)
+        height: pxToRem(40)
+        border-radius: 50%
+        margin-right: pxToRem(8)
+        overflow: hidden
+        .mini-player-image
+          position: absolute
+          left: 0
+          top: 0
+          width: 100%
+      .mini-player-songs-info
+        flex: 1
+        min-width: 0
+        font-size: 0
+        @include setPadding(right, pxToRem(8))
+        .mini-player-songName, .mini-player-lyrics
+          display: block
+          font-size: pxToRem(12)
+        .mini-player-songName
+          @include setPadding(right, pxToRem(10))
+          overflow: hidden
+          white-space: nowrap
+          text-overflow: ellipsis
+          margin-bottom: pxToRem(6)
+        .mini-player-lyrics
+          overflow: hidden
+          .lyric
+            display: block
+            overflow: hidden
+            white-space: nowrap
+            text-overflow: ellipsis
+    .mini-player-controls-icon
+      display: flex
+      align-items: center
+      .icon-miniPlayer_play, .icon-miniPlayer_playlist, .icon-miniPlayer_pause
+        font-size: pxToRem(26)
+      .icon-miniPlayer_play, .icon-miniPlayer_pause
+        font-size: pxToRem(30)
+        position: absolute
+        left: 50%
+        top: 50%
+        z-index: -1
+        transform: translate(-50%, -50%)
+      .icon-miniPlayer_playlist
+        margin-left: pxToRem(14)
+.keyframes-rotate
+  animation: animation 20s linear infinite
+  @keyframes animation
+    0%
+      transform: rotate(0deg)
+    100%
+      transform: rotate(360deg)
+
+.keyframes-boxShadow
+  animation: boxShadow 2s linear infinite alternate-reverse
+  @keyframes boxShadow
+    0%
+      box-shadow: 0 0 0 #ffffff
+    100%
+      box-shadow: 0 0 10px #ffffff

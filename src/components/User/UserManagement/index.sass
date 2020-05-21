@@ -1,0 +1,21 @@
+@import "../../../style/variable"
+@import "../../../style/helper"
+
+.user-management
+  display: flex
+  justify-content: space-around
+  align-items: center
+  @include setPadding((top, bottom, left, right), (top: pxToRem(10), bottom: pxToRem(20), left: pxToRem(10), right: pxToRem(10)))
+  .management-item
+    display: flex
+    flex-direction: column
+    align-items: center
+    font-size: 0
+    color: $management_item_text_color
+    .icon-localMusic, .icon-downloadManager, .icon-my_radio, .icon-my_collection, .icon-focus_newSong
+      font-size: 24px
+      margin-bottom: pxToRem(8)
+    .management-item-text
+      font-size: 12px
+      @extend %scale
+      letter-spacing: 1px

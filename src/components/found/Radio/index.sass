@@ -1,0 +1,42 @@
+@import "../../../style/helper"
+
+.radio-container
+  .radio-scroll-container
+    @include setPadding(top, pxToRem(14))
+    overflow-x: auto
+    &::-webkit-scrollbar
+      display: none
+    .radio-scroll-content
+      display: flex
+      justify-content: flex-start
+      align-items: flex-start
+      .radio-item
+        display: inline-block
+        flex: 0 0 29%
+        min-width: 0
+        margin-right: pxToRem(10)
+        &:last-child
+          @include setPadding(right, pxToRem(16))
+        .radio-image-container
+          position: relative
+          @include set_image(radio-image)
+          .icon
+            position: absolute
+            right: pxToRem(8)
+            bottom: pxToRem(8)
+        .radio-item-text-container
+          margin-top: pxToRem(6)
+          font-size: 0
+          .radio-item-text-title
+            display: block
+            overflow: hidden
+            text-overflow: ellipsis
+            white-space: nowrap
+            font-size: pxToRem(12)
+            margin-bottom: pxToRem(4)
+          .radio-item-text-description
+            display: block
+            font-size: pxToRem(12)
+            overflow: hidden
+            word-break: break-all
+            line-height: 16px

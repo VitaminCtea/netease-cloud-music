@@ -1,0 +1,82 @@
+@import "../../../style/helper"
+
+.hotWindVane-container
+  @include setPadding(top, (top: pxToRem(10)))
+  .hotWindVane-content
+    @include setPadding(top, pxToRem(14))
+    overflow: hidden
+    .hotWindVane-scroll-container
+      display: inline-block
+      white-space: nowrap
+      .hotWindVane-scroll-item
+        display: inline-block
+        vertical-align: middle
+        margin-right: pxToRem(10)
+        @include setPadding((left, right, top), pxToRem(10))
+        background-color: darkcyan
+        border-radius: 10px
+        font-size: 0
+        .hotWindVane-item-title-container
+          display: flex
+          align-items: center
+          @include setPadding(top, pxToRem(6))
+          .icon-top-newSong, .icon-top-hotSong, .icon-top-originalSong, .icon-top-rocketsSong, .icon-top-singSong
+            font-size: pxToRem(18)
+            margin-right: pxToRem(6)
+          .icon-top-singSong
+            display: inline-block
+            transform: scale(-1, 1)
+          .hotWindVane-item-title-description
+            font-size: pxToRem(14)
+            color: $hot_wind_vane_title_color
+        .hotWindVane-list
+          margin: 0
+          padding: 0
+          @include setPadding(top, pxToRem(20))
+          color: $hot_wind_vane_title_color
+          .hotWindVane-list-item
+            display: flex
+            justify-content: space-between
+            align-items: center
+            @include setPadding(bottom, pxToRem(10))
+            .hotWindVane-image-container
+              position: relative
+              flex-shrink: 0
+              flex-basis: pxToRem(50)
+              height: pxToRem(50)
+              border-radius: pxToRem(6)
+              overflow: hidden
+              @include set_image(hotWindVane-image)
+            .hotWindVane-list-item-details
+              flex: 1
+              min-width: 0
+              display: flex
+              align-items: center
+              font-size: pxToRem(14)
+              .hotWindVane-serialNumber-container
+                @include setPadding((left, right), pxToRem(8))
+                .hotWindVane-item-serialNumber
+                  font-size: pxToRem(12)
+              .hotWindVane-item-text
+                flex: 1
+                min-width: 0
+                display: flex
+                align-items: center
+                white-space: nowrap
+                %ellipsis
+                  overflow: hidden
+                  text-overflow: ellipsis
+                .hotWindVane-item-songName
+                  @extend %ellipsis
+                  font-size: pxToRem(13)
+                .hotWindVane-horizontal-line
+                  font-size: pxToRem(12)
+                  @include setPadding((left, right), pxToRem(6))
+                .hotWindVane-item-singer
+                  @extend %ellipsis
+                  color: $hot_wind_vane_list_item_singer_color
+                  font-size: pxToRem(12)
+            .hotWindVane-item-song-state-container
+              @include setPadding((top, right, bottom, left), pxToRem(6))
+              .hotWindVane-item-song-state
+                font-size: pxToRem(12)

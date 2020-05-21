@@ -1,0 +1,30 @@
+@import "../../../style/variable"
+@import "../../../style/helper"
+
+.playlist-type-container
+  @include setPadding((left, right, top, bottom), (left: pxToRem(16), right: pxToRem(16), top: pxToRem(20), bottom: pxToRem(10)))
+  .playlist-type-content
+    font-size: 0
+    .playlist-type-header-container
+      display: flex
+      justify-content: space-between
+      align-items: center
+      @include setPadding(bottom, pxToRem(10))
+      .playlist-type-header-content
+        display: flex
+        align-items: center
+        .playlist-type-header-item
+          margin-right: pxToRem(16)
+          .playlist-type-text
+            font-size: 14px
+            text-decoration: none
+            color: $playlist_type_text_color
+            .playlist-count
+              display: inline-block
+              @extend %scale
+              font-size: 12px
+          .active
+            color: $playlist_type_router_text_color
+            background-color: transparent
+      .playlist-menu
+        font-size: 12px

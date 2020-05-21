@@ -1,0 +1,24 @@
+@import "../../style/helper"
+
+.tip-container
+  position: fixed
+  left: 0
+  top: 0
+  border-radius: 8px
+  display: flex
+  justify-content: center
+  overflow: hidden
+  min-width: 50%
+  margin-left: 50%
+  white-space: nowrap
+  .tip-content
+    width: 100%
+    display: flex
+    justify-content: center
+    align-items: center
+    @include setPadding((top, bottom, left, right), (top: pxToRem(6), bottom: pxToRem(6), left: pxToRem(14), right: pxToRem(14)))
+    .icon-tip-warning, .icon-tip-error, .icon-tip-success
+      font-size: 24px
+      margin-right: pxToRem(10)
+    .tip-text
+      font-size: 12px

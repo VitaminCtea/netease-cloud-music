@@ -13,6 +13,7 @@ module.exports = override(
       ["helper"]: path.resolve(__dirname, 'src/helper'),
       ["icon"]: path.resolve(__dirname, 'src/icon'),
       ["reducers"]: path.resolve(__dirname, 'src/reducers'),
-      ["hooks"]: path.resolve(__dirname, 'src/hooks')
+      ["hooks"]: path.resolve(__dirname, 'src/hooks'),
+      ["constants"]: path.resolve(__dirname, 'src/constants')
   })
 )
