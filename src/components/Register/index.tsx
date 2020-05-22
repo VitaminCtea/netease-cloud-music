@@ -408,20 +408,20 @@ export default function Register() {
 
     const pageComponent = useMemo(() => {
         return count === 0 ? (
-            <FillPhoneForward
-                setCallback={setCount}
-                setFlag={setFlag}
-                ref={fillPhone}
-                value={savedPhone.current}
-            />
+                <FillPhoneForward
+                        setCallback={setCount}
+                        setFlag={setFlag}
+                        ref={fillPhone}
+                        value={savedPhone.current}
+                />
         ) : count === 1 ? (
-            <ValidatePhoneForward
-                setCallback={setCount}
-                value={savedPhone.current}
-                ref={validateCode}
-            />
+                <ValidatePhoneForward
+                        setCallback={setCount}
+                        value={savedPhone.current}
+                        ref={validateCode}
+                />
         ) : (
-            <NickName phone={savedPhone.current} code={savedCode.current} />
+                <NickName phone={savedPhone.current} code={savedCode.current}/>
         )
     }, [count])
 
@@ -436,16 +436,16 @@ export default function Register() {
     }, [flag, count, validateCode.current])
 
     return (
-        <div className={'register-container'}>
-            <div className={'register-content'}>
-                <div className={'register-header'}>
-                    <i className={'icon-register_back'} onClick={back} />
-                    <span className={'register-header-text'}>
+            <div className={'register-container'}>
+                <div className={'register-content'}>
+                    <div className={'register-header'}>
+                        <i className={'icon-register_back'} onClick={back}/>
+                        <span className={'register-header-text'}>
                         网易云账号注册
                     </span>
+                    </div>
+                    {pageComponent}
                 </div>
-                {pageComponent}
             </div>
-        </div>
     )
 }
