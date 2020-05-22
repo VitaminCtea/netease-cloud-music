@@ -1,9 +1,9 @@
-import { connect } from "react-redux";
-import { RootState } from "reducers/index";
-import Found from "components/found";
+import { connect } from 'react-redux'
+import { RootState } from 'reducers/index'
+import Found from 'components/found'
 
 const mapStateToProps = (state: RootState) => ({
-  isCurrentSong: !!state.currentSong,
-});
+    isCurrentSong: !!state.currentSong,
+})
 
-export default connect(mapStateToProps, null)(Found);
+export default connect(mapStateToProps, null)(Found)

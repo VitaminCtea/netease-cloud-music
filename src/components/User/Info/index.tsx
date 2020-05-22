@@ -14,8 +14,7 @@ type Props = {
 }
 
 export default function Info({ userInfo, setLoginStatus }: Props) {
-    const history = useHistory()
-    const jump = useCallback(() => setLoginStatus(true), [])
+    const change = useCallback(() => setLoginStatus(true), [])
     return (
         <div className={'user-info-container'}>
             <div className={'user-info-content'}>
@@ -53,7 +52,7 @@ export default function Info({ userInfo, setLoginStatus }: Props) {
                 {userInfo.profile && userInfo.level ? (
                     <span className={'open-vip'}>开通黑胶VIP {'>'}</span>
                 ) : (
-                    <span className={'loginImmediately'} onClick={jump}>
+                    <span className={'loginImmediately'} onClick={change}>
                         立即登录
                     </span>
                 )}
