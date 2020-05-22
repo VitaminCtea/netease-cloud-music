@@ -1,193 +1,197 @@
 @font-face {
-  font-family: "icomoon";
-  src: url("../common/fonts/icomoon.eot?vmndjx");
-  src: url("../common/fonts/icomoon.eot?vmndjx#iefix")
-      format("embedded-opentype"),
-    url("../common/fonts/icomoon.ttf?vmndjx") format("truetype"),
-    url("../common/fonts/icomoon.woff?vmndjx") format("woff"),
-    url("../common/fonts/icomoon.svg?vmndjx#icomoon") format("svg");
-  font-weight: normal;
-  font-style: normal;
-  font-display: block;
+    font-family: 'icomoon';
+    src: url('../common/fonts/icomoon.eot?ba9bj0');
+    src: url('../common/fonts/icomoon.eot?ba9bj0#iefix')
+            format('embedded-opentype'),
+        url('../common/fonts/icomoon.ttf?ba9bj0') format('truetype'),
+        url('../common/fonts/icomoon.woff?ba9bj0') format('woff'),
+        url('../common/fonts/icomoon.svg?ba9bj0#icomoon') format('svg');
+    font-weight: normal;
+    font-style: normal;
+    font-display: block;
 }
 
-[class^="icon-"],
-[class*=" icon-"] {
-  /* use !important to prevent issues with browser extensions that change fonts */
-  font-family: "icomoon" !important;
-  speak: none;
-  font-style: normal;
-  font-weight: normal;
-  font-variant: normal;
-  text-transform: none;
-  line-height: 1;
+[class^='icon-'],
+[class*=' icon-'] {
+    /* use !important to prevent issues with browser extensions that change fonts */
+    font-family: 'icomoon' !important;
+    speak: none;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
 
-  /* Better Font Rendering =========== */
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+    /* Better Font Rendering =========== */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
+.icon-login-close:before {
+    content: '\e92a';
+    color: #fff;
+}
 .icon-login-password:before {
-  content: "\e925";
-  color: #d81e06;
+    content: '\e925';
+    color: #d81e06;
 }
 .icon-login-phone:before {
-  content: "\e926";
-  color: #d81e06;
+    content: '\e926';
+    color: #d81e06;
 }
 .icon-tip-error:before {
-  content: "\e922";
-  color: #d81e06;
+    content: '\e922';
+    color: #d81e06;
 }
 .icon-tip-success:before {
-  content: "\e923";
-  color: #1afa29;
+    content: '\e923';
+    color: #1afa29;
 }
 .icon-tip-warning:before {
-  content: "\e924";
-  color: #ffa500;
+    content: '\e924';
+    color: #ffa500;
 }
 .icon-my_fm:before {
-  content: "\e920";
-  color: #fff;
+    content: '\e920';
+    color: #fff;
 }
 .icon-my_music_favorite:before {
-  content: "\e921";
-  color: #ff1d11;
+    content: '\e921';
+    color: #ff1d11;
 }
 .icon-downloadManager:before {
-  content: "\e910";
-  color: #fff;
+    content: '\e910';
+    color: #fff;
 }
 .icon-focus_newSong:before {
-  content: "\e91c";
-  color: #fff;
+    content: '\e91c';
+    color: #fff;
 }
 .icon-localMusic:before {
-  content: "\e91d";
-  color: #fff;
+    content: '\e91d';
+    color: #fff;
 }
 .icon-my_collection:before {
-  content: "\e91e";
-  color: #fff;
+    content: '\e91e';
+    color: #fff;
 }
 .icon-my_radio:before {
-  content: "\e91f";
-  color: #fff;
+    content: '\e91f';
+    color: #fff;
 }
 .icon-player-pause:before {
-  content: "\e91b";
-  color: #fff;
+    content: '\e91b';
+    color: #fff;
 }
 .icon-miniPlayer_playlist:before {
-  content: "\e917";
+    content: '\e917';
 }
 .icon-miniPlayer_pause:before {
-  content: "\e918";
+    content: '\e918';
 }
 .icon-miniPlayer_play:before {
-  content: "\e919";
+    content: '\e919';
 }
 .icon-normalPlayer_playlist:before {
-  content: "\e91a";
-  color: #cfcecc;
+    content: '\e91a';
+    color: #cfcecc;
 }
 .icon-player-download:before {
-  content: "\e902";
-  color: #fff;
+    content: '\e902';
+    color: #fff;
 }
 .icon-player-info:before {
-  content: "\e905";
-  color: #fff;
+    content: '\e905';
+    color: #fff;
 }
 .icon-share:before {
-  content: "\e90b";
-  color: #fff;
+    content: '\e90b';
+    color: #fff;
 }
 .icon-vip:before {
-  content: "\e90d";
-  color: #fff;
+    content: '\e90d';
+    color: #fff;
 }
 .icon-back:before {
-  content: "\e909";
-  color: #fff;
+    content: '\e909';
+    color: #fff;
 }
 .icon-player-comment:before {
-  content: "\e90a";
-  color: #fff;
+    content: '\e90a';
+    color: #fff;
 }
 .icon-player-favorite:before {
-  content: "\e90c";
-  color: #fff;
+    content: '\e90c';
+    color: #fff;
 }
 .icon-player-listCirculation:before {
-  content: "\e90e";
-  color: #fff;
+    content: '\e90e';
+    color: #fff;
 }
 .icon-player-nextSong:before {
-  content: "\e90f";
-  color: #fff;
+    content: '\e90f';
+    color: #fff;
 }
 .icon-player-play:before {
-  content: "\e911";
-  color: #fff;
+    content: '\e911';
+    color: #fff;
 }
 .icon-player-prevSong:before {
-  content: "\e913";
-  color: #fff;
+    content: '\e913';
+    color: #fff;
 }
 .icon-player-randomPlay:before {
-  content: "\e914";
-  color: #fff;
+    content: '\e914';
+    color: #fff;
 }
 .icon-player-singleCirculation:before {
-  content: "\e915";
-  color: #fff;
+    content: '\e915';
+    color: #fff;
 }
 .icon-top-hotSong:before {
-  content: "\e900";
-  color: #fff;
+    content: '\e900';
+    color: #fff;
 }
 .icon-top-newSong:before {
-  content: "\e901";
-  color: #fff;
+    content: '\e901';
+    color: #fff;
 }
 .icon-top-originalSong:before {
-  content: "\e903";
-  color: #fff;
+    content: '\e903';
+    color: #fff;
 }
 .icon-recommend-playCount:before {
-  content: "\e904";
-  color: #fff;
+    content: '\e904';
+    color: #fff;
 }
 .icon-musicStyle-borderPlay:before {
-  content: "\e916";
-  color: #ff1d11;
+    content: '\e916';
+    color: #ff1d11;
 }
 .icon-refresh:before {
-  content: "\e906";
-  color: #4f7daf;
+    content: '\e906';
+    color: #4f7daf;
 }
 .icon-top-rocketsSong:before {
-  content: "\e907";
-  color: #fff;
+    content: '\e907';
+    color: #fff;
 }
 .icon-top-singSong:before {
-  content: "\e908";
-  color: #fff;
+    content: '\e908';
+    color: #fff;
 }
 .icon-song_vip:before {
-  content: "\e912";
-  color: #ff1d11;
+    content: '\e912';
+    color: #ff1d11;
 }
 .icon-clear:before {
-  content: "\e927";
-  color: #8a8a8a;
+    content: '\e927';
+    color: #8a8a8a;
 }
 .icon-musicStyle-disable:before {
-  content: "\e928";
-  color: #bfbfbf;
+    content: '\e928';
+    color: #bfbfbf;
 }
 .icon-register_back:before {
-  content: "\e929";
+    content: '\e929';
 }
