@@ -8,9 +8,13 @@
   right: 0
   bottom: 0
   background-color: $login_background_color
-  z-index: 2
+  z-index: 23
+  @include setPadding((top, bottom, left, right), pxToRem(16))
   .login-content
     overflow: hidden
+    .icon-login-close
+      font-size: 32px
+      display: inline-block
     .logo
       width: pxToRem(70)
       height: pxToRem(70)
@@ -67,3 +71,7 @@
         border-radius: 20px
         color: $official_color
         @include setPadding((top, left, right, bottom), (top: pxToRem(10), left: pxToRem(16), right: pxToRem(16), bottom: pxToRem(10)))
+      .login-description
+        font-size: 12px
+        margin-top: pxToRem(20)
+        color: $login_description_text_color
