@@ -1,0 +1,31 @@
+@import "../../style/helper"
+
+.playlist-list
+  margin: 0
+  padding: 0
+  display: grid
+  grid-template-columns: repeat(2, 1fr)
+  .playlist-item
+    display: flex
+    align-items: center
+    .playlist-item-image-container
+      position: relative
+      width: pxToRem(55)
+      height: pxToRem(55)
+      border-radius: 8px
+      overflow: hidden
+      .playlist-item-image
+        position: absolute
+        left: 0
+        top: 0
+        width: 100%
+    .playlist-item-description
+      display: flex
+      flex-direction: column
+      align-items: flex-start
+      font-size: 0
+      @include setPadding(left, pxToRem(10))
+      .playlist-item-name, .playlist-item-song-count
+        font-size: 12px
+      .playlist-item-name
+        margin-bottom: pxToRem(6)
