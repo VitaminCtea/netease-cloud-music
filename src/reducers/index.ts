@@ -15,10 +15,12 @@ import {
     userPlaylistCountInfo,
     userLoginState,
     userRegisterState,
+    loginStatusCode,
 } from './user'
 
 export type RootState = ReturnType<typeof rootReducer>
 const rootReducer = combineReducers({
+    loginStatusCode,
     userRegisterState,
     userLoginState,
     userInfo,

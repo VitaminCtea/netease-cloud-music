@@ -1,7 +1,14 @@
-import React from 'react'
+import React, { useCallback, useState, Suspense } from 'react'
 import './index.sass'
+import GeneralLoading from 'common/GeneralLoading'
+
+const FavoriteMusic = React.lazy(() => import('containers/FavoriteMusic'))
 
 export default function Music() {
+    const [show, setShow] = useState(false)
+    const enterDetails = useCallback(() => {
+        setShow(!show)
+    }, [show])
     return (
         <div className={'my-music-container'}>
             <div className={'my-music-content'}>
@@ -10,7 +17,7 @@ export default function Music() {
                 </div>
                 <div className={'my-music-type-container'}>
                     <div className={'my-music-type-content'}>
-                        <div className={'my-music-item'}>
+                        <div className={'my-music-item'} onClick={enterDetails}>
                             <div className={'my-music-layer'}>
                                 <div className={'my-music-type'}>
                                     <i className={'icon-my_music_favorite'} />
@@ -48,6 +55,9 @@ export default function Music() {
                     </div>
                 </div>
             </div>
+            <Suspense fallback={<GeneralLoading />}>
+                <FavoriteMusic setShow={setShow} show={show} />
+            </Suspense>
         </div>
     )
 }

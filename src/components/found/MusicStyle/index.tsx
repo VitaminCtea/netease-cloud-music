@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react'
+import React, { useEffect, useMemo, useState, useCallback, useRef } from 'react'
 import axios from 'axios'
 import { v4 as uuidv4 } from 'uuid'
 import FoundHeader from 'common/FoundHeader'
@@ -8,9 +8,10 @@ import { Loading } from 'common/Loading/index'
 import { random } from 'helper/index'
 import { PlayerProps } from 'containers/MusicStyle'
 import Vip from 'common/Vip'
+import { getSongUrl } from 'common/ts/fetch'
 import './index.sass'
 
-const EXTRACT_NUMBER = 12
+const EXTRACT_NUMBER = 9
 
 type Props = {
     name: string
@@ -54,111 +55,88 @@ type MusicStyleProps = {
 export default function MusicStyle({ updatePlayState }: MusicStyleProps) {
     const [playlist, setPlayList] = useState<{ [PropName: string]: any }>({})
     const [title, setTitle] = useState<string>('')
-    const type = useMemo(() => ['华语', '古风', '欧美', '流行'], [])
-    const description = useMemo(
-        () => [
-            [
-                '你在找的好听华语歌',
-                '一秒沦陷 华语精选',
-                '一人一首华语经典',
-                '一秒沦陷 华语精选',
-                '走过华语音乐街',
-                '精选华语金曲',
-                '聆听华语佳曲',
-            ],
-            [
-                '古风 唱罢人间世',
-                '古风如茶 满城花城',
-                '古风一曲解千愁',
-                '古风 一段琴一段情',
-                '一曲一唱思华年',
-                '古风 赐君一场千秋梦',
-            ],
-            '欧美流行精选',
-            '不可错过的流行单曲',
+    const type = useRef(['华语', '古风', '欧美', '流行'])
+    const description = useRef([
+        [
+            '你在找的好听华语歌',
+            '一秒沦陷 华语精选',
+            '一人一首华语经典',
+            '一秒沦陷 华语精选',
+            '走过华语音乐街',
+            '精选华语金曲',
+            '聆听华语佳曲',
         ],
-        []
-    )
+        [
+            '古风 唱罢人间世',
+            '古风如茶 满城花城',
+            '古风一曲解千愁',
+            '古风 一段琴一段情',
+            '一曲一唱思华年',
+            '古风 赐君一场千秋梦',
+        ],
+        '欧美流行精选',
+        '不可错过的流行单曲',
+    ])
     const getPlayListDetails = useMemo(() => {
         return async function () {
             const index = random(0, 3)
-            let title = description[index]
+            let title = description.current[index]
             if (typeof title === 'object') {
                 title = title[random(0, title.length - 1)]
             }
             setTitle(title)
             const res = await axios.get(
-                `/api/top/playlist/highquality?cat=${type[index]}&limit=10`
+                `/api/top/playlist/highquality?cat=${type.current[index]}&limit=10`
             )
+
             const lists = res.data.playlists
             const id = lists[random(0, lists.length - 1)].id
             const details = await axios.get(`/api/playlist/detail?id=${id}`)
-            let songs = details.data.playlist.tracks.filter(Boolean)
-            const resultSongs: typeof songs[0] = []
-            for (let i: number = 0; i < EXTRACT_NUMBER; i++) {
-                const index = random(0, songs.length - 1)
-                resultSongs.push(songs[index])
-                songs.splice(index, 1)
-            }
-            const promises = resultSongs.map((item: typeof resultSongs[0]) => {
-                return axios.get(`/api/song/url?id=${item.id}`)
-            })
-            axios.all(promises).then(
-                axios.spread((...promises: any[]) => {
-                    const urls = promises.map((item) => item.data.data[0].url)
-                    const playlist = resultSongs.map(
-                        (item: typeof resultSongs[0], index: number) => ({
-                            ...item,
-                            url: urls[index],
-                            hasUrl: !!urls[index],
-                        })
-                    )
-                    details.data.playlist.tracks = playlist
-                    setPlayList(details.data.playlist)
-                })
+            const songs = details.data.playlist.tracks
+
+            const resultSongs = Array.from({ length: EXTRACT_NUMBER }).map(
+                () => {
+                    const index = random(0, songs.length - 1)
+                    const song = songs[index]
+                    songs.splice(index, 1)
+                    return song
+                }
             )
+            getSongUrl(details, resultSongs, setPlayList)
         }
-    }, [title])
+    }, [])
+
+    const createAttrs = useCallback((item: { [PropName: string]: any }) => {
+        return {
+            name: item.name,
+            picUrl: item.al.picUrl,
+            singer: item.ar[0],
+            hasUrl: item.hasUrl,
+            key: uuidv4(),
+        }
+    }, [])
+
     const transformDataGrouping = useMemo(() => {
         if (playlist.tracks) {
             const data = playlist.tracks
             const musicItems = []
             for (let i: number = 0; i < data.length; i += 3) {
                 musicItems.push([
-                    <Item
-                        name={data[i].name}
-                        picUrl={data[i].al.picUrl}
-                        singer={data[i].ar[0]}
-                        hasUrl={data[i].hasUrl}
-                        key={uuidv4()}
-                    />,
-
-                    <Item
-                        name={data[i + 1].name}
-                        picUrl={data[i + 1].al.picUrl}
-                        singer={data[i + 1].ar[0]}
-                        hasUrl={data[i + 1].hasUrl}
-                        key={uuidv4()}
-                    />,
-
-                    <Item
-                        name={data[i + 2].name}
-                        picUrl={data[i + 2].al.picUrl}
-                        singer={data[i + 2].ar[0]}
-                        hasUrl={data[i + 2].hasUrl}
-                        key={uuidv4()}
-                    />,
+                    <Item {...createAttrs(data[i])} />,
+                    <Item {...createAttrs(data[i + 1])} />,
+                    <Item {...createAttrs(data[i + 2])} />,
                 ])
             }
             return musicItems.map((musicItem: React.ReactChild[]) => {
                 return (
                     <div className={'newMusic-group'} key={uuidv4()}>
-                        {musicItem.map((Child: React.ReactNode) => Child)}
+                        {musicItem}
                     </div>
                 )
             })
         }
     }, [playlist])
+
     useEffect(() => {
         if (!playlist.tracks) {
             getPlayListDetails()
@@ -166,11 +144,13 @@ export default function MusicStyle({ updatePlayState }: MusicStyleProps) {
             const items = document.querySelectorAll('.newMusic-item')!
             for (let i: number = 0; i < items.length; i++) {
                 ;(items[i] as HTMLElement).onclick = () => {
+                    if (!playlist.tracks[i].hasUrl) return
                     updatePlayState(playlist.tracks, i)
                 }
             }
         }
     }, [playlist])
+
     return (
         <div className={'newMusic-container'}>
             <FoundHeader

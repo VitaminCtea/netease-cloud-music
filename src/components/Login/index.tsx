@@ -1,21 +1,26 @@
-import React, { useState, useCallback, useRef } from 'react'
-import { useHistory } from 'react-router-dom'
-import Tip, { MessageType } from 'common/Tip'
-import { ValidateForm } from 'common/ts/validateForm'
+import React, { useCallback, useRef } from 'react'
 import axios from 'axios'
-import './index.sass'
+import { useHistory } from 'react-router-dom'
+import Tip from 'common/Tip'
+import { ValidateForm } from 'common/ts/validateForm'
 import { UserState } from 'containers/Login'
+import { useTip } from 'hooks/showTip'
+import './index.sass'
 
 type Props = UserState
 export default function Login({
-    onIncrement,
+    getUser,
     userRegisterState,
     setLoginStatus,
+    loginStatusCode,
+    updateRegisterStatus,
 }: Props) {
     const history = useHistory()
-    const [enabled, setEnabled] = useState(false)
-    const [message, setMessage] = useState('请您先登录')
-    const [type, setType] = useState<MessageType>('warning')
+    const [state, dispatch] = useTip({
+        message: '请您先登录',
+        enabled: false,
+        type: 'warning',
+    })
     const buttonRef: React.RefObject<HTMLButtonElement> = useRef(null)
     const loginFormRef: React.RefObject<HTMLFormElement> = useRef(null)
     const userNonRegister = useRef<any>(false)
@@ -54,6 +59,7 @@ export default function Login({
             return errorMsg
         }
     }, [])
+
     const getUserRegisterInfo = useCallback(async (e: React.SyntheticEvent) => {
         const target = e.target as HTMLInputElement
         const val = target.value
@@ -64,11 +70,15 @@ export default function Login({
             const data = info.data
             if (data.exist === -1) {
                 userNonRegister!.current! = true
-                setMessage('当前手机号码没有注册过，请您先注册!')
+                dispatch({
+                    type: 'warning',
+                    value: '当前手机号码没有注册过，请您先注册!',
+                })
                 buttonRef!.current!.innerHTML = '立即注册'
                 return
             }
         }
+        updateRegisterStatus()
         buttonRef!.current!.innerHTML = '立即登录'
     }, [])
 
@@ -86,25 +96,33 @@ export default function Login({
                     return
                 }
                 if (validateValue()) {
-                    setMessage(validateValue())
-                    setEnabled(!enabled)
-                    setType('error')
+                    dispatch({
+                        type: 'error',
+                        value: validateValue(),
+                    })
+                    return false
+                }
+                const form = loginFormRef!.current!
+                const phone = form.userPhone.value
+                const password = form.userPassword.value
+                getUser(phone, password)
+                if (loginStatusCode > 200) {
+                    dispatch({
+                        type: 'error',
+                        value: '密码错误, 请重新输入!',
+                    })
                     return false
                 }
                 buttonRef!.current!.disabled = true
                 buttonRef!.current!.style.color = '#ccc'
-                const form = loginFormRef!.current!
-                const phone = form.userPhone.value
-                const password = form.userPassword.value
-                onIncrement(phone, password)
                 history.push('/')
             }
         },
-        [enabled]
+        [state.enabled, loginStatusCode]
     )
     return (
-        <div className={'login-container'}>
-            <Tip message={message} enabled={enabled} type={type} />
+        <>
+            <Tip {...state} />
             <div className={'login-content'}>
                 <i
                     className={'icon-login-close'}
@@ -144,6 +162,6 @@ export default function Login({
                     </span>
                 </form>
             </div>
-        </div>
+        </>
     )
 }

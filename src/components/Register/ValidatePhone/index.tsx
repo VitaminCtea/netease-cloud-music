@@ -1,10 +1,11 @@
 import React, { useState, useCallback, useEffect, useRef } from 'react'
 import axios from 'axios'
-import Tip, { MessageType } from 'common/Tip'
+import Tip from 'common/Tip'
 import { useInterval } from 'hooks/interval'
 import TransitionPage from 'common/RegisterTransition'
 import { padZero } from 'helper/index'
 import { isNumber } from '../FillPhone'
+import { useTip } from 'hooks/showTip'
 
 type ValidatePhoneProps = {
     setCallback: Function
@@ -21,9 +22,7 @@ export default function ValidatePhone({
     const [delay, setDelay] = useState<number | null>(1000)
     const sendSecondsRef: React.RefObject<HTMLButtonElement> = useRef(null)
 
-    const [message, setMessage] = useState('')
-    const [enabled, setEnabled] = useState(false)
-    const [type, setType] = useState<MessageType>('warning')
+    const [state, dispatch] = useTip()
 
     const formatPhoneNumber = useCallback(
         (phoneNumber: string) =>
@@ -96,7 +95,9 @@ export default function ValidatePhone({
             )
             captcha += String.fromCharCode(code)
             if (index === 3) {
-                setEnabled(false)
+                dispatch({
+                    type: 'reset',
+                })
                 axios
                     .get(
                         `/api/captcha/verify?phone=${value}&captcha=${captcha}`
@@ -108,9 +109,10 @@ export default function ValidatePhone({
                         setCallback((count: number) => count + 1)
                     })
                     .catch((e) => {
-                        setEnabled(true)
-                        setType('error')
-                        setMessage('验证码错误')
+                        dispatch({
+                            type: 'error',
+                            value: '验证码错误',
+                        })
                         reset(validateItems)
                         index = 0
                         captcha = ''
@@ -129,9 +131,7 @@ export default function ValidatePhone({
     return (
         <TransitionPage>
             <div className={'validate-container'}>
-                {enabled && (
-                    <Tip message={message} enabled={enabled} type={type} />
-                )}
+                {state.enabled && <Tip {...state} />}
                 <div className={'validate-content'}>
                     <div className={'validate-top'}>
                         <div className={'validate-send'}>

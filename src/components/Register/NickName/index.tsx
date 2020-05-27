@@ -1,12 +1,13 @@
 import React, { useState, useCallback, useRef } from 'react'
 import { useHistory } from 'react-router-dom'
 import axios from 'axios'
-import Tip, { MessageType } from 'common/Tip'
+import Tip from 'common/Tip'
 import { ValidateForm } from 'common/ts/validateForm'
 import TransitionPage from 'common/RegisterTransition'
 import NextStep from 'common/NextStep'
 import { NickNameProps } from 'containers/NickName'
 import { transformUrl } from 'helper/index'
+import { useTip } from 'hooks/showTip'
 
 type NickProps = {
     phone: string
@@ -20,9 +21,7 @@ export default function NickName({
     const history = useHistory()
     const [isComplete, updateState] = useState(false)
     const formRef: React.RefObject<HTMLFormElement> = useRef(null)
-    const [message, setMessage] = useState('')
-    const [enabled, setEnabled] = useState(false)
-    const [type, setType] = useState<MessageType>('warning')
+    const [state, dispatch] = useTip()
 
     const checkInputValue = useCallback((e: React.SyntheticEvent) => {
         const target = e.currentTarget as HTMLFormElement
@@ -52,53 +51,57 @@ export default function NickName({
         return errorMsg
     }, [])
     const setRegister = useCallback(() => {
-        setEnabled(false)
+        dispatch({
+            type: 'reset',
+        })
         const form = formRef!.current!
         const password = form.userPassword.value
         const nickName = form.userNickName.value
         if (password && nickName) {
             const error = validatePassword(form)
             if (error) {
-                setEnabled(true)
-                setType('error')
-                setMessage(error)
+                dispatch({
+                    type: 'error',
+                    value: error,
+                })
                 return false
             }
-            console.log(phone)
             const url = transformUrl('/api/register/cellphone', {
                 phone,
                 password,
                 captcha,
                 nickName,
             })
-            console.log(url)
-            // axios.get(`${ url }`).then(res => {
-            //     setEnabled(true)
-            //     setType('success')
-            //     setMessage('注册成功')
-            //     // 注册成功状态
-            //     changeRegister(true)
-            //     history.push({
-            //         pathname: '/login',
-            //         state: {
-            //             phone,
-            //             password
-            //         }
-            //     })
-            // }).catch(() => {
-            //     setEnabled(true)
-            //     setType('error')
-            //     setMessage('注册失败, 服务器出小差啦')
-            //     changeRegister(false)
-            // })
+            axios
+                .get(`${url}`)
+                .then((res) => {
+                    dispatch({
+                        type: 'success',
+                        value: '注册成功',
+                    })
+                    // 注册成功状态
+                    changeRegister(true)
+                    history.push({
+                        pathname: '/login',
+                        state: {
+                            phone,
+                            password,
+                        },
+                    })
+                })
+                .catch(() => {
+                    dispatch({
+                        type: 'error',
+                        value: '注册失败, 服务器出小差啦',
+                    })
+                    changeRegister(false)
+                })
         }
-    }, [captcha, phone, message, enabled])
+    }, [captcha, phone, state.message, state.enabled])
     return (
         <TransitionPage>
             <div className={'nickName-container'}>
-                {enabled && (
-                    <Tip message={message} enabled={enabled} type={type} />
-                )}
+                {state.enabled && <Tip {...state} />}
                 <form
                     className={'nickName-content'}
                     ref={formRef}

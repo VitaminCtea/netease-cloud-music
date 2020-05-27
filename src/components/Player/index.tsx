@@ -11,7 +11,7 @@ import {
     pageTransitionStyle,
     DURATION,
     miniPlayerDefaultStyle,
-} from 'common/ts/pageAnimation'
+} from 'common/ts/pageTransitionStyle'
 import './index.sass'
 
 const MINUTES = 60

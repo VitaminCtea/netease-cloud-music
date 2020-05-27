@@ -7,7 +7,6 @@ import * as serviceWorker from './serviceWorker'
 import { createStore, applyMiddleware } from 'redux'
 import { composeWithDevTools } from 'redux-devtools-extension'
 import logger from 'redux-logger'
-
 import rootReducer from 'reducers/index'
 
 import './style/style.css'

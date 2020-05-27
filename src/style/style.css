@@ -1,11 +1,11 @@
 @font-face {
     font-family: 'icomoon';
-    src: url('../common/fonts/icomoon.eot?ba9bj0');
-    src: url('../common/fonts/icomoon.eot?ba9bj0#iefix')
+    src: url('../common/fonts/icomoon.eot?e5ccff');
+    src: url('../common/fonts/icomoon.eot?e5ccff#iefix')
             format('embedded-opentype'),
-        url('../common/fonts/icomoon.ttf?ba9bj0') format('truetype'),
-        url('../common/fonts/icomoon.woff?ba9bj0') format('woff'),
-        url('../common/fonts/icomoon.svg?ba9bj0#icomoon') format('svg');
+        url('../common/fonts/icomoon.ttf?e5ccff') format('truetype'),
+        url('../common/fonts/icomoon.woff?e5ccff') format('woff'),
+        url('../common/fonts/icomoon.svg?e5ccff#icomoon') format('svg');
     font-weight: normal;
     font-style: normal;
     font-display: block;
@@ -27,6 +27,17 @@
     -moz-osx-font-smoothing: grayscale;
 }
 
+.icon-play-borderPlay-black:before {
+    content: '\e92f';
+}
+.icon-video:before {
+    content: '\e930';
+    color: #cdcdcd;
+}
+.icon-favorite:before {
+    content: '\e92e';
+    color: #fff;
+}
 .icon-login-close:before {
     content: '\e92a';
     color: #fff;
@@ -194,4 +205,16 @@
 }
 .icon-register_back:before {
     content: '\e929';
+}
+.icon-more:before {
+    content: '\e92c';
+    color: #fff;
+}
+.icon-search:before {
+    content: '\e92d';
+    color: #fff;
+}
+.icon-multi-select:before {
+    content: '\e92b';
+    color: #fff;
 }

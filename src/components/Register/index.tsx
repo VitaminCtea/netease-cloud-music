@@ -19,36 +19,28 @@ export default function Register() {
     const [count, setCount] = useState(0)
     const [flag, setFlag] = useState(false)
     const [code, setVerificationCode] = useState('')
-
-    const savedPhone = useRef('')
-    const fillPhone: React.RefObject<any> = useRef(null)
+    const [phone, setPhone] = useState('')
 
     const back = useCallback(() => {
-        if (count < 1) history.push('/login')
+        if (count < 1) history.push('/')
         setCount((count) => count - 1)
     }, [count, flag])
 
     const pageComponent = useMemo(() => {
         return [
             <FillPhoneForward
-                setCallback={setCount}
+                setCount={setCount}
                 setFlag={setFlag}
-                ref={fillPhone}
+                setPhone={setPhone}
             />,
             <ValidatePhone
                 setCallback={setCount}
-                value={savedPhone.current}
+                value={phone}
                 setVerificationCode={setVerificationCode}
             />,
-            <NickName phone={savedPhone.current} captcha={code} />,
+            <NickName phone={phone} captcha={code} />,
         ]
     }, [count])
-
-    useEffect(() => {
-        if (fillPhone.current) {
-            savedPhone.current = fillPhone.current.value
-        }
-    }, [flag, count])
 
     return (
         <div className={'register-container'}>

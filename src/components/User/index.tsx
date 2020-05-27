@@ -1,6 +1,4 @@
 import React, { useMemo, useState, Suspense } from 'react'
-import { Transition } from 'react-transition-group'
-import { pageDefaultStyle, pageTransitionStyle } from 'common/ts/pageAnimation'
 import Placeholder from 'common/Placeholder'
 import Info from './Info'
 import Music from './Music'
@@ -8,11 +6,17 @@ import UserManagement from './UserManagement'
 import RecentlyPlayed from './RecentlyPlayed'
 import PlaylistType from './PlaylistType'
 import GeneralLoading from 'common/GeneralLoading'
+import { MapStateToProps } from 'containers/User'
+import PageTransition from 'common/PageTransition'
 import './index.sass'
 
 const Login = React.lazy(() => import('containers/Login'))
 
-export default function My({ userInfo }: any) {
+export default function My({
+    userInfo,
+    userRegisterState,
+    userLoginState,
+}: MapStateToProps) {
     const [loginStatus, setLoginStatus] = useState(false)
     const defaultUserInfo = useMemo(
         () => ({
@@ -48,24 +52,13 @@ export default function My({ userInfo }: any) {
                 </div>
             </div>
             <Suspense fallback={<GeneralLoading />}>
-                <Transition in={loginStatus} appear unmountOnExit timeout={200}>
-                    {(state: keyof typeof pageTransitionStyle) => (
-                        <div
-                            style={{
-                                ...pageDefaultStyle,
-                                ...pageTransitionStyle[state],
-                                position: 'fixed',
-                                left: 0,
-                                right: 0,
-                                top: 0,
-                                bottom: 0,
-                                zIndex: 22,
-                            }}
-                        >
-                            <Login setLoginStatus={setLoginStatus} />
-                        </div>
-                    )}
-                </Transition>
+                <PageTransition
+                    isShow={loginStatus && !userLoginState}
+                    timeout={200}
+                    className={'login-container'}
+                >
+                    <Login setLoginStatus={setLoginStatus} />
+                </PageTransition>
             </Suspense>
         </>
     )

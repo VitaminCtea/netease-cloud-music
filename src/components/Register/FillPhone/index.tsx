@@ -1,11 +1,4 @@
-import React, {
-    useState,
-    useRef,
-    useCallback,
-    useImperativeHandle,
-    useEffect,
-    forwardRef,
-} from 'react'
+import React, { useState, useRef, useCallback, useEffect } from 'react'
 import { useLocation } from 'react-router-dom'
 import TransitionPage from 'common/RegisterTransition'
 import NextStep from 'common/NextStep'
@@ -30,7 +23,12 @@ const useComplete = () => {
     return [complete, updateState] as const
 }
 
-const FillPhone = (props: any, ref: any) => {
+type Props = {
+    setCount: Function
+    setFlag: Function
+    setPhone: Function
+}
+export default function FillPhone({ setCount, setFlag, setPhone }: Props) {
     const location = useLocation<{ phone: string }>()
     const inputRef: React.RefObject<HTMLInputElement> = useRef(null)
     const [hasInputVal, setInputValState] = useState(false)
@@ -55,7 +53,8 @@ const FillPhone = (props: any, ref: any) => {
                 const check = /^1[358][0-9]{9}$/.test(target.value)
                 if (!check) return false
                 inputValue.current = target.value
-                props.setFlag((flag: boolean) => !flag)
+                setFlag((flag: boolean) => !flag)
+                setPhone(target.value)
             }
             updateState(target.value.length, LENGTH)
         },
@@ -70,17 +69,8 @@ const FillPhone = (props: any, ref: any) => {
         }
     }, [])
 
-    useImperativeHandle(
-        ref,
-        () => ({
-            value: inputValue.current
-                ? inputValue.current
-                : location.state.phone,
-        }),
-        [inputValue.current]
-    )
-
     useEffect(() => {
+        setPhone(location.state.phone)
         updateState(inputRef.current!.value.length, LENGTH)
     }, [])
 
@@ -106,7 +96,7 @@ const FillPhone = (props: any, ref: any) => {
                     )}
                 </div>
                 <NextStep
-                    setCallback={props.setCallback}
+                    setCallback={setCount}
                     isComplete={isComplete}
                     isRegister={false}
                 >
@@ -116,5 +106,3 @@ const FillPhone = (props: any, ref: any) => {
         </TransitionPage>
     )
 }
-
-export default forwardRef(FillPhone)
