@@ -5,9 +5,9 @@ import { parsingLyrics } from 'helper/index'
 import { createAction } from './createAction'
 
 export const playModeIconClassNames = [
-    'icon-player-listCirculation',
-    'icon-player-singleCirculation',
-    'icon-player-randomPlay',
+    'icon-listCirculation',
+    'icon-singleCycle',
+    'icon-randomPlay',
 ]
 
 export enum PlayMode {
@@ -56,22 +56,21 @@ export const getCurrentSong: ThunkDispatch = () => async (
     getState
 ) => {
     const state = getState()
-    dispatch(setCurrentSong(state.playlist[state.currentIndex]))
+    // dispatch(setCurrentSong(state.playlist[state.currentIndex]))
     const song = state.playlist[state.currentIndex]
     const res = await axios.get(`/api/lyric?id=${song.id}`)
+    const resSong = await axios.get(`/api/song/url?id=${song.id}`)
+    const url = resSong.data.data[0].url
     const result = res.data
+    let lyric
     if (result.nolyric) {
-        dispatch(
-            setCurrentSong({ ...state.playlist[state.currentIndex], lyric: [] })
-        )
+        lyric = []
     } else {
-        const lyric = {
-            lyric: result.nolyric ? '' : parsingLyrics(result?.lrc?.lyric),
-        }
-        dispatch(
-            setCurrentSong({ ...state.playlist[state.currentIndex], ...lyric })
-        )
+        lyric = result.nolyric ? '' : parsingLyrics(result?.lrc?.lyric)
     }
+    dispatch(
+        setCurrentSong({ ...state.playlist[state.currentIndex], lyric, url, hasUrl: !!url })
+    )
 }
 
 export type List = { [PropName: string]: any }
@@ -92,10 +91,10 @@ export const updatePlayInfo: ThunkDispatch = (
         )
         dispatch(setCurrentIndex(sequenceIndex))
         dispatch(setPlaylist(state.playlist))
-    } else {
-        dispatch(setPlaylist(playlist))
-        dispatch(setCurrentIndex(index))
+        return
     }
+    dispatch(setCurrentIndex(index))
+    dispatch(setPlaylist(playlist))
 }
 
 export const updatePlayModeIconClassName: ThunkDispatch = () => (

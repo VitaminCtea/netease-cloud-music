@@ -3,7 +3,7 @@
 .hotWindVane-container
   @include setPadding(top, (top: pxToRem(10)))
   .hotWindVane-content
-    @include setPadding(top, pxToRem(14))
+    @include setPadding((top, bottom), pxToRem(14))
     overflow: hidden
     .hotWindVane-scroll-container
       display: inline-block

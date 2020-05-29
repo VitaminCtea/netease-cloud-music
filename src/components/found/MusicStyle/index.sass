@@ -5,7 +5,7 @@
   .newMusic-content
     display: inline-block
     white-space: nowrap
-    padding-top: pxToRem(14)
+    @include setPadding((top, bottom), pxToRem(14))
     overflow-x: auto
     transform: translate3d(0, 0, 0)
     .newMusic-group

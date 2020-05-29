@@ -1,220 +1,211 @@
 @font-face {
-    font-family: 'icomoon';
-    src: url('../common/fonts/icomoon.eot?e5ccff');
-    src: url('../common/fonts/icomoon.eot?e5ccff#iefix')
-            format('embedded-opentype'),
-        url('../common/fonts/icomoon.ttf?e5ccff') format('truetype'),
-        url('../common/fonts/icomoon.woff?e5ccff') format('woff'),
-        url('../common/fonts/icomoon.svg?e5ccff#icomoon') format('svg');
-    font-weight: normal;
-    font-style: normal;
-    font-display: block;
+  font-family: 'icomoon';
+  src:  url('../common/fonts/icomoon.eot?738l1y');
+  src:  url('../common/fonts/icomoon.eot?738l1y#iefix') format('embedded-opentype'),
+    url('../common/fonts/icomoon.ttf?738l1y') format('truetype'),
+    url('../common/fonts/icomoon.woff?738l1y') format('woff'),
+    url('../common/fonts/icomoon.svg?738l1y#icomoon') format('svg');
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
 }
 
-[class^='icon-'],
-[class*=' icon-'] {
-    /* use !important to prevent issues with browser extensions that change fonts */
-    font-family: 'icomoon' !important;
-    speak: none;
-    font-style: normal;
-    font-weight: normal;
-    font-variant: normal;
-    text-transform: none;
-    line-height: 1;
+[class^="icon-"], [class*=" icon-"] {
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: 'icomoon' !important;
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
 
-    /* Better Font Rendering =========== */
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-.icon-play-borderPlay-black:before {
-    content: '\e92f';
+.icon-multi-select:before {
+  content: "\e902";
+  color: #fff;
 }
-.icon-video:before {
-    content: '\e930';
-    color: #cdcdcd;
+.icon-download:before {
+  content: "\e90c";
+  color: #fff;
 }
-.icon-favorite:before {
-    content: '\e92e';
-    color: #fff;
+.icon-favorite_background:before {
+  content: "\e90e";
+  color: #ff1d11;
 }
-.icon-login-close:before {
-    content: '\e92a';
-    color: #fff;
+.icon-favorite_border:before {
+  content: "\e910";
+  color: #fff;
 }
-.icon-login-password:before {
-    content: '\e925';
-    color: #d81e06;
+.icon-horn:before {
+  content: "\e914";
+  color: #ff1d11;
 }
-.icon-login-phone:before {
-    content: '\e926';
-    color: #d81e06;
-}
-.icon-tip-error:before {
-    content: '\e922';
-    color: #d81e06;
-}
-.icon-tip-success:before {
-    content: '\e923';
-    color: #1afa29;
-}
-.icon-tip-warning:before {
-    content: '\e924';
-    color: #ffa500;
-}
-.icon-my_fm:before {
-    content: '\e920';
-    color: #fff;
-}
-.icon-my_music_favorite:before {
-    content: '\e921';
-    color: #ff1d11;
-}
-.icon-downloadManager:before {
-    content: '\e910';
-    color: #fff;
-}
-.icon-focus_newSong:before {
-    content: '\e91c';
-    color: #fff;
-}
-.icon-localMusic:before {
-    content: '\e91d';
-    color: #fff;
-}
-.icon-my_collection:before {
-    content: '\e91e';
-    color: #fff;
-}
-.icon-my_radio:before {
-    content: '\e91f';
-    color: #fff;
-}
-.icon-player-pause:before {
-    content: '\e91b';
-    color: #fff;
-}
-.icon-miniPlayer_playlist:before {
-    content: '\e917';
+.icon-listCirculation:before {
+  content: "\e915";
+  color: #fff;
 }
 .icon-miniPlayer_pause:before {
-    content: '\e918';
+  content: "\e917";
 }
 .icon-miniPlayer_play:before {
-    content: '\e919';
+  content: "\e918";
+}
+.icon-miniPlayer_playlist:before {
+  content: "\e919";
+}
+.icon-normalPlayer_pause:before {
+  content: "\e91a";
+  color: #fff;
+}
+.icon-normalPlayer_play:before {
+  content: "\e928";
+  color: #fff;
 }
 .icon-normalPlayer_playlist:before {
-    content: '\e91a';
-    color: #cfcecc;
+  content: "\e92e";
+  color: #fff;
 }
-.icon-player-download:before {
-    content: '\e902';
-    color: #fff;
+.icon-randomPlay:before {
+  content: "\e92f";
+  color: #fff;
+}
+.icon-singleCycle:before {
+  content: "\e931";
+  color: #fff;
+}
+.icon-video:before {
+  content: "\e930";
+  color: #cdcdcd;
+}
+.icon-login-close:before {
+  content: "\e92a";
+  color: #fff;
+}
+.icon-login-password:before {
+  content: "\e925";
+  color: #d81e06;
+}
+.icon-login-phone:before {
+  content: "\e926";
+  color: #d81e06;
+}
+.icon-tip-error:before {
+  content: "\e922";
+  color: #d81e06;
+}
+.icon-tip-success:before {
+  content: "\e923";
+  color: #1afa29;
+}
+.icon-tip-warning:before {
+  content: "\e924";
+  color: #ffa500;
+}
+.icon-my_fm:before {
+  content: "\e920";
+  color: #fff;
+}
+.icon-my_music_favorite:before {
+  content: "\e921";
+  color: #ff1d11;
+}
+.icon-focus_newSong:before {
+  content: "\e91c";
+  color: #fff;
+}
+.icon-localMusic:before {
+  content: "\e91d";
+  color: #fff;
+}
+.icon-my_collection:before {
+  content: "\e91e";
+  color: #fff;
+}
+.icon-my_radio:before {
+  content: "\e91f";
+  color: #fff;
 }
 .icon-player-info:before {
-    content: '\e905';
-    color: #fff;
+  content: "\e905";
+  color: #fff;
 }
 .icon-share:before {
-    content: '\e90b';
-    color: #fff;
+  content: "\e90b";
+  color: #fff;
 }
 .icon-vip:before {
-    content: '\e90d';
-    color: #fff;
+  content: "\e90d";
+  color: #fff;
 }
 .icon-back:before {
-    content: '\e909';
-    color: #fff;
+  content: "\e909";
+  color: #fff;
 }
 .icon-player-comment:before {
-    content: '\e90a';
-    color: #fff;
-}
-.icon-player-favorite:before {
-    content: '\e90c';
-    color: #fff;
-}
-.icon-player-listCirculation:before {
-    content: '\e90e';
-    color: #fff;
+  content: "\e90a";
+  color: #fff;
 }
 .icon-player-nextSong:before {
-    content: '\e90f';
-    color: #fff;
-}
-.icon-player-play:before {
-    content: '\e911';
-    color: #fff;
+  content: "\e90f";
+  color: #fff;
 }
 .icon-player-prevSong:before {
-    content: '\e913';
-    color: #fff;
-}
-.icon-player-randomPlay:before {
-    content: '\e914';
-    color: #fff;
-}
-.icon-player-singleCirculation:before {
-    content: '\e915';
-    color: #fff;
+  content: "\e913";
+  color: #fff;
 }
 .icon-top-hotSong:before {
-    content: '\e900';
-    color: #fff;
+  content: "\e900";
+  color: #fff;
 }
 .icon-top-newSong:before {
-    content: '\e901';
-    color: #fff;
+  content: "\e901";
+  color: #fff;
 }
 .icon-top-originalSong:before {
-    content: '\e903';
-    color: #fff;
+  content: "\e903";
+  color: #fff;
 }
 .icon-recommend-playCount:before {
-    content: '\e904';
-    color: #fff;
+  content: "\e904";
+  color: #fff;
 }
 .icon-musicStyle-borderPlay:before {
-    content: '\e916';
-    color: #ff1d11;
+  content: "\e916";
+  color: #ff1d11;
 }
 .icon-refresh:before {
-    content: '\e906';
-    color: #4f7daf;
+  content: "\e906";
+  color: #4f7daf;
 }
 .icon-top-rocketsSong:before {
-    content: '\e907';
-    color: #fff;
+  content: "\e907";
+  color: #fff;
 }
 .icon-top-singSong:before {
-    content: '\e908';
-    color: #fff;
+  content: "\e908";
+  color: #fff;
 }
 .icon-song_vip:before {
-    content: '\e912';
-    color: #ff1d11;
+  content: "\e912";
+  color: #ff1d11;
 }
 .icon-clear:before {
-    content: '\e927';
-    color: #8a8a8a;
-}
-.icon-musicStyle-disable:before {
-    content: '\e928';
-    color: #bfbfbf;
+  content: "\e927";
+  color: #8a8a8a;
 }
 .icon-register_back:before {
-    content: '\e929';
+  content: "\e929";
 }
 .icon-more:before {
-    content: '\e92c';
-    color: #fff;
+  content: "\e92c";
+  color: #fff;
 }
 .icon-search:before {
-    content: '\e92d';
-    color: #fff;
-}
-.icon-multi-select:before {
-    content: '\e92b';
-    color: #fff;
+  content: "\e92d";
+  color: #fff;
 }

@@ -6,7 +6,7 @@ export default function UserManagement() {
     const management = useMemo(() => {
         return {
             'icon-localMusic': '本地音乐',
-            'icon-downloadManager': '下载管理',
+            'icon-download': '下载管理',
             'icon-my_radio': '我的电台',
             'icon-my_collection': '我的收藏',
             'icon-focus_newSong': '关注新歌',

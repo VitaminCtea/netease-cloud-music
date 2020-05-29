@@ -27,10 +27,6 @@ export const SET_USER_LOGIN_STATE = 'SET_USER_LOGIN_STATE'
 
 export const SET_LOGIN_STATUS_CODE = 'SET_LOGIN_STATUS_CODE'
 
-// Get song address
-
-export const SET_SONG_ADDRESS = 'SET_SONG_ADDRESS'
-
 type Obj = { [PropName: string]: any }
 export type Action =
     | { type: typeof SET_FULL_SCREEN; fullScreen: boolean }
@@ -47,7 +43,6 @@ export type Action =
     | { type: typeof SET_USER_REGISTER_STATE; userRegisterState: boolean }
     | { type: typeof SET_USER_LOGIN_STATE; userLoginState: boolean }
     | { type: typeof SET_LOGIN_STATUS_CODE; loginStatusCode: number }
-    | { type: typeof SET_SONG_ADDRESS; songUrl: string }
 
 export type Playlist = {
     user: {
@@ -70,5 +65,4 @@ export type Params = {
     userRegisterState: boolean
     userLoginState: boolean
     loginStatusCode: number
-    songUrl: string
 }

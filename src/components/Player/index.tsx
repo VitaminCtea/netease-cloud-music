@@ -57,8 +57,8 @@ export default function Player({
     // icon图标
     const icons = useMemo(
         () => [
-            'icon-player-favorite',
-            'icon-player-download',
+            'icon-favorite_border',
+            'icon-download',
             'icon-vip',
             'icon-player-comment',
             'icon-player-info',
@@ -68,7 +68,7 @@ export default function Player({
     const controlsIcons = useMemo(
         () => [
             'icon-player-prevSong',
-            'icon-player-play',
+            'icon-normalPlayer_play',
             'icon-player-nextSong',
             'icon-normalPlayer_playlist',
         ],
@@ -90,7 +90,7 @@ export default function Player({
 
     // 控制播放或暂停图标
     const updatePlayIcon = useMemo(
-        () => (playing ? 'icon-miniPlayer_pause' : 'icon-miniPlayer_play'),
+        () => (playing ? 'icon-miniPlayer_play' : 'icon-miniPlayer_pause'),
         [playing]
     )
 
@@ -355,11 +355,11 @@ export default function Player({
         ) => {
             const target = e.target as HTMLElement
             switch (target.className) {
-                case 'icon-player-pause':
-                case 'icon-player-play':
+                case 'icon-normalPlayer_pause':
+                case 'icon-normalPlayer_play':
                     const className = playing
-                        ? 'icon-player-play'
-                        : 'icon-player-pause'
+                        ? 'icon-normalPlayer_pause' :
+                            'icon-normalPlayer_play'
                     target.className = className
                     await setSongFade(audioRef!.current!)
                     updatePlayingState(!playing)
@@ -382,8 +382,8 @@ export default function Player({
 
     useEffect(() => {
         if (fullScreen) {
-            const iconPlay = getSelector('.icon-player-play')
-            const className = playing ? 'icon-player-pause' : 'icon-player-play'
+            const iconPlay = getSelector('.icon-normalPlayer_play')
+            const className = playing ? 'icon-normalPlayer_play' : 'icon-normalPlayer_pause'
             if (iconPlay !== null) {
                 iconPlay.className = className
             }
@@ -398,7 +398,7 @@ export default function Player({
     return (
         <div className={'player-container'}>
             <Transition
-                in={fullScreen}
+                in={fullScreen && !!currentSong}
                 timeout={DURATION}
                 appear={true}
                 unmountOnExit={true}
