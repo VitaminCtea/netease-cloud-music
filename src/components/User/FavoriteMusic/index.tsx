@@ -1,22 +1,29 @@
-import React from 'react'
-import Playlist from 'common/Playlist'
-import './index.sass'
-import { FavoriteMapState } from 'containers/FavoriteMusic'
+import React, { Suspense } from 'react'
 import PageTransition from 'common/PageTransition'
+import { FavoriteMapState } from 'containers/FavoriteMusic'
+import GeneralLoading from 'common/GeneralLoading'
+import './index.sass'
 
 type Props = {
-    playlist?: FavoriteMapState['playlist']
+    playlist: FavoriteMapState['playlist']
     setShow: Function
     show: boolean
+    updatePlayState: Function
 }
-export default function FavoriteMusic({ playlist, setShow, show }: Props) {
-    if (!playlist.user) return null
+
+const Playlist = React.lazy(() => import('common/Playlist'))
+
+export default function FavoriteMusic({ playlist, setShow, show, updatePlayState }: Props) {
+    if (!playlist) return null
     return (
         <PageTransition isShow={show} className={'favoriteList-container'}>
-            <Playlist
-                id={playlist.user.favoritePlaylist.id}
-                setShow={setShow}
-            />
+            <Suspense fallback={ <GeneralLoading /> }>
+                <Playlist
+                        id={ playlist.id }
+                        setShow={ setShow }
+                        updatePlayState={ updatePlayState }
+                />
+            </Suspense>
         </PageTransition>
     )
 }

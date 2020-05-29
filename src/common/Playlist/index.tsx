@@ -11,6 +11,7 @@ import './index.sass'
 
 const CONTAINER_CLASS_NAME = 'list-scroll-container'
 const TARGET_CLASS_NAME = 'song-item'
+const ITEM_SIZE = 65
 
 const getTargetElement = (target: HTMLElement) => {
     if (target.className !== CONTAINER_CLASS_NAME) {
@@ -31,6 +32,29 @@ const updateRedux = (
         isFullScreen: boolean = false
 ) => updateCurrentIndex(data, getIndex(getTargetElement(target), callback), isFullScreen)
 
+const SongRightContainer = ({ item }: { item: { [PropName: string]: any } }) => (
+   <div className={'song-right-container'}>
+       <div className={'song-info'}>
+           <span className={'song-name'}>{ item.name }</span>
+           <div className={'song-singer-container'}>
+               {
+                   item.ar.map((singer: typeof item.ar[0], index: number, array: typeof item.ar) => {
+                       let singerName = index > 0 ? '/' + singer.name : singer.name
+                       if (index === array.length - 1) {
+                           singerName += ' - ' + item.name
+                       }
+                       return <span className={'song-singer-name'} key={ uuidv4() }>{ singerName }</span>
+                   })
+               }
+           </div>
+       </div>
+       <div className={'song-controls-container'}>
+           <i className={'icon-video'} />
+           <i className={'icon-more'} />
+       </div>
+   </div>
+)
+
 type RowProps = {
     index: number
     style: { [PropName: string]: any }
@@ -39,30 +63,9 @@ type RowProps = {
 const Row = ({ index, style, data }: RowProps) => {
     const item = data[index]
     return (
-        <div className={'song-item'} style={style}>
-            <span className={'song-serialNumber'}>{index + 1}</span>
-            <div className={'song-right-container'}>
-                <div className={'song-info'}>
-                    <span className={'song-name'}>{item.name}</span>
-                    <div className={'song-singer-container'}>
-                        {item.ar.map((singer: typeof item.ar[0], index: number, array: typeof item.ar) => {
-                            let singerName = index > 0 ? '/' + singer.name : singer.name
-                            if (index === array.length - 1) {
-                                singerName += ' - ' + item.name
-                            }
-                            return (
-                                <span className={'song-singer-name'} key={uuidv4()}>
-                                    {singerName}
-                                </span>
-                            )
-                        })}
-                    </div>
-                </div>
-                <div className={'song-controls-container'}>
-                    <i className={'icon-video'} />
-                    <i className={'icon-more'} />
-                </div>
-            </div>
+        <div className={'song-item'} style={ style }>
+            <span className={'song-serialNumber'}>{ index + 1 }</span>
+            <SongRightContainer item={ item } />
         </div>
     )
 }
@@ -75,14 +78,12 @@ type SongListProps<S extends any = { [PropName: string]: any }> = {
 const SongList = ({ data, style, outerElementType }: SongListProps) => (
     <AutoSizer>
         {({ height, width }) => (
-            <FixedSizeList height={height}
-                           itemCount={
-                               data?.tracks ? data.tracks.length : 0
-                           }
-                           itemSize={65}
-                           width={width}
+            <FixedSizeList height={ height }
+                           itemCount={ data?.tracks ? data.tracks.length : 0}
+                           itemSize={ ITEM_SIZE }
+                           width={ width }
                            style={{ ...style }}
-                           itemData={data?.tracks}
+                           itemData={ data?.tracks }
                            className={'list-scroll-container'}
                            outerElementType={ outerElementType }
             >
@@ -182,29 +183,12 @@ const SearchComponent = ({ rgb, data, setSearchStatus, updatePlayState }: Search
                         <div className={'songList-list-content'} style={{ padding: 0 }} onClick={ clickPlay }>
                             {
                                 searchData.map((item: typeof searchData[0]) => (
-                                    <div className={'song-item'} key={ uuidv4() } style={{ paddingBottom: '20px' }} data-id={ item.id }>
-                                        <div className={'song-right-container'}>
-                                            <div className={'song-info'}>
-                                                <span className={'song-name'}>{item.name}</span>
-                                                <div className={'song-singer-container'}>
-                                                    {
-                                                        item.ar.map((singer: typeof item.ar[0], index: number, array: typeof item.ar) => {
-                                                            let singerName = index > 0 ? '/' + singer.name : singer.name
-                                                            if (index === array.length - 1) {
-                                                                singerName += ' - ' + item.name
-                                                            }
-                                                            return (
-                                                                <span className={'song-singer-name'} key={uuidv4()}>{singerName}</span>
-                                                            )
-                                                        })
-                                                    }
-                                                </div>
-                                            </div>
-                                            <div className={'song-controls-container'}>
-                                                <i className={'icon-video'} />
-                                                <i className={'icon-more'} />
-                                            </div>
-                                        </div>
+                                    <div className={'song-item'}
+                                         key={ uuidv4() }
+                                         style={{ paddingBottom: '20px' }}
+                                         data-id={ item.id }
+                                    >
+                                        <SongRightContainer item={ item } />
                                     </div>
                                 ))
                             }
@@ -256,7 +240,7 @@ export default function Playlist({ id, setShow, updatePlayState }: Props) {
             const top = style.getPropertyValue('top')
             return parseInt(top, 10) / target.clientHeight
         }, (data, index) => {
-            updatePlayState(info?.tracks, index)
+            updatePlayState(data, index)
         })
     }
 

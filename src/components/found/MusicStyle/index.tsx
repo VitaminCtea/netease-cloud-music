@@ -7,8 +7,6 @@ import AnimationImage from 'common/AnimationImage'
 import { Loading } from 'common/Loading/index'
 import { random } from 'helper/index'
 import { PlayerProps } from 'containers/MusicStyle'
-import Vip from 'common/Vip'
-import { getSongUrl } from 'common/ts/fetch'
 import './index.sass'
 
 const EXTRACT_NUMBER = 9
@@ -17,37 +15,29 @@ type Props = {
     name: string
     picUrl: string
     singer: { [propName: string]: any }
-    hasUrl: boolean
 }
-const Item = ({ name, picUrl, singer, hasUrl }: Props) => (
-    <div className={'newMusic-item'}>
-        <div className={'newMusic-image-container'}>
-            <AnimationImage
-                src={`${picUrl}`}
-                alt={name}
-                overflow={true}
-                inProp={true}
-                className={'newMusic-image'}
-            />
-        </div>
-        <div className={'newMusic-right-container'}>
-            <div className={'newMusic-info'}>
-                <span className={'newMusic-name'}>{name}</span>
-                <Vip hasUrl={hasUrl} singer={singer} />
-            </div>
-            <div className={'icon-newMusic-play-container'}>
-                <i
-                    className={`${
-                        hasUrl
-                            ? 'icon-musicStyle-borderPlay'
-                            : 'icon-musicStyle-disable'
-                    }`}
-                />
-            </div>
-        </div>
-    </div>
-)
 
+const Item = ({ name, picUrl, singer }: Props) => (
+   <div className={'newMusic-item'}>
+       <div className={'newMusic-image-container'}>
+           <AnimationImage src={`${picUrl}`}
+                           alt={name}
+                           overflow={true}
+                           inProp={true}
+                           className={'newMusic-image'}
+                />
+       </div>
+       <div className={'newMusic-right-container'}>
+           <div className={'newMusic-info'}>
+               <span className={'newMusic-name'}>{name}</span>
+               <span className={ 'newMusic-singer' } style={{ fontSize: '12px' }}>{ singer }</span>
+           </div>
+           <div className={'icon-newMusic-play-container'}>
+               <i className={ 'icon-musicStyle-borderPlay' } />
+           </div>
+       </div>
+   </div>
+)
 type MusicStyleProps = {
     updatePlayState: PlayerProps
 }
@@ -102,7 +92,9 @@ export default function MusicStyle({ updatePlayState }: MusicStyleProps) {
                     return song
                 }
             )
-            getSongUrl(details, resultSongs, setPlayList)
+
+            details.data.playlist.tracks = resultSongs
+            setPlayList(details.data.playlist)
         }
     }, [])
 
@@ -110,9 +102,8 @@ export default function MusicStyle({ updatePlayState }: MusicStyleProps) {
         return {
             name: item.name,
             picUrl: item.al.picUrl,
-            singer: item.ar[0],
-            hasUrl: item.hasUrl,
-            key: uuidv4(),
+            singer: item.ar[0].name,
+            key: uuidv4()
         }
     }, [])
 
@@ -135,7 +126,7 @@ export default function MusicStyle({ updatePlayState }: MusicStyleProps) {
                 )
             })
         }
-    }, [playlist])
+    }, [ playlist ])
 
     useEffect(() => {
         if (!playlist.tracks) {
@@ -143,8 +134,9 @@ export default function MusicStyle({ updatePlayState }: MusicStyleProps) {
         } else {
             const items = document.querySelectorAll('.newMusic-item')!
             for (let i: number = 0; i < items.length; i++) {
-                ;(items[i] as HTMLElement).onclick = () => {
-                    if (!playlist.tracks[i].hasUrl) return
+                let item = items[i] as HTMLElement
+                while (item.className !== 'newMusic-item') item = item.parentNode as HTMLElement
+                item.onclick = () => {
                     updatePlayState(playlist.tracks, i)
                 }
             }

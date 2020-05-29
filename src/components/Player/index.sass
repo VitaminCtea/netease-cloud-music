@@ -11,7 +11,7 @@
     position: fixed
     @extend %full
     background-color: $normal_player_background_color
-    z-index: 200
+    z-index: 900
     color: $normal_player_color
     @include setPadding((left, right), pxToRem(20))
     overflow: hidden
@@ -115,10 +115,8 @@
       display: flex
       justify-content: space-around
       align-items: center
-      .icon-player-favorite, .icon-player-download, .icon-player-comment, .icon-player-info, .icon-vip
+      .icon-favorite_border, .icon-download, .icon-player-comment, .icon-player-info, .icon-vip
         font-size: pxToRem(24)
-        &:before
-          color: $normal_player_icons_color
       .icon-vip
         font-size: pxToRem(26)
     .normal-player-bottom-top
@@ -154,18 +152,16 @@
           touch-action: none
     .control-songs-container
       margin: pxToRem(30) 0
-      .icon-player-randomPlay, .icon-player-prevSong, .icon-player-nextSong, .icon-normalPlayer_playlist, .icon-player-listCirculation, .icon-player-singleCirculation
+      .icon-randomPlay, .icon-player-prevSong, .icon-player-nextSong, .icon-normalPlayer_playlist, .icon-listCirculation, .icon-singleCycle
         font-size: pxToRem(22)
-        &:before
-          color: $normal_player_icons_color
-      .icon-player-play, .icon-player-pause
-        font-size: pxToRem(40)
+      .icon-normalPlayer_play, .icon-normalPlayer_pause
+        font-size: pxToRem(52)
   .mini-player
     position: fixed
     left: 0
     right: 0
     bottom: 0
-    z-index: 20
+    z-index: 800
     display: flex
     justify-content: space-between
     align-items: center
@@ -214,9 +210,9 @@
       display: flex
       align-items: center
       .icon-miniPlayer_play, .icon-miniPlayer_playlist, .icon-miniPlayer_pause
-        font-size: pxToRem(26)
+        font-size: pxToRem(28)
       .icon-miniPlayer_play, .icon-miniPlayer_pause
-        font-size: pxToRem(30)
+        font-size: pxToRem(35)
         position: absolute
         left: 50%
         top: 50%
