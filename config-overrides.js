@@ -14,6 +14,7 @@ module.exports = override(
       ["icon"]: path.resolve(__dirname, 'src/icon'),
       ["reducers"]: path.resolve(__dirname, 'src/reducers'),
       ["hooks"]: path.resolve(__dirname, 'src/hooks'),
-      ["constants"]: path.resolve(__dirname, 'src/constants')
+      ["constants"]: path.resolve(__dirname, 'src/constants'),
+      ["Routes"]: path.resolve(__dirname, 'src/Routes')
   })
 )

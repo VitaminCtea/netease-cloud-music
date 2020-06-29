@@ -1,13 +1,6 @@
-import React, {
-    useCallback,
-    useRef,
-    useState,
-    useEffect,
-    useMemo,
-    Suspense,
-} from 'react'
+import React, { useCallback, useState, useMemo, Suspense } from 'react'
 import { useHistory } from 'react-router-dom'
-import GeneralLoading from 'common/GeneralLoading'
+import GeneralLoading from 'common/loading/GeneralLoading'
 import './index.sass'
 
 const FillPhoneForward = React.lazy(() => import('./FillPhone'))
@@ -22,7 +15,7 @@ export default function Register() {
     const [phone, setPhone] = useState('')
 
     const back = useCallback(() => {
-        if (count < 1) history.push('/')
+        if (count < 1) history.goBack()
         setCount((count) => count - 1)
     }, [count, flag])
 

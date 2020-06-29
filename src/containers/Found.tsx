@@ -1,5 +1,6 @@
+import React from 'react'
 import { connect } from 'react-redux'
-import { RootState } from 'reducers/index'
+import { RootState } from '../reducers'
 import Found from 'components/found'
 
 const mapStateToProps = (state: RootState) => ({

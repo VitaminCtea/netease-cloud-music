@@ -19,7 +19,7 @@ export const userPlaylistCountInfo = createReducer(
 )
 
 export const userPlaylist = createReducer(
-    getLocalVal('userPlaylist', []),
+    getLocalVal('userPlaylist', null),
     constants.SET_USER_PLAYLIST
 )
 
@@ -36,4 +36,9 @@ export const userLoginState = createReducer(
 export const loginStatusCode = createReducer(
     hasUser('userInfo') ? 200 : 0,
     constants.SET_LOGIN_STATUS_CODE
+)
+
+export const favoriteList = createReducer(
+    getLocalVal('userFavoriteList', []),
+    constants.SET_FAVORITE_PLAYLIST
 )

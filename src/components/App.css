@@ -1,0 +1,88 @@
+.router-wrapper {
+    height: 100%;
+}
+
+.router-wrapper::-webkit-scrollbar {
+    display: none;
+}
+
+.forward-from-right-enter {
+    transform: translateX(100%);
+}
+
+.forward-from-right-enter-active {
+    transform: translateX(0);
+    transition: all 300ms;
+}
+
+.forward-from-right-exit {
+    transform: translateX(0);
+}
+
+.forward-from-right-exit-active {
+    transform: translateX(-100%);
+    transition: all 300ms;
+}
+
+.back-to-right-enter {
+    transform: translateX(-100%);
+}
+
+.back-to-right-enter-active {
+    transform: translateX(0);
+    transition: all 300ms;
+}
+
+.back-to-right-exit {
+    transform: translateX(0);
+}
+
+.back-to-right-exit-active {
+    transform: translate(100%);
+    transition: all 300ms;
+}
+
+/* 其他路由页面效果 */
+.forward-from-bottom-enter {
+    opacity: 0;
+    transform: translateY(80px);
+}
+
+.forward-from-bottom-enter-active {
+    opacity: 1;
+    transform: translateY(0);
+    transition: all 300ms;
+}
+
+.forward-from-bottom-exit {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.forward-from-bottom-exit-active {
+    opacity: 0;
+    transform: translateY(0);
+    transition: all 300ms;
+}
+
+.back-to-bottom-enter {
+    opacity: 0;
+    transform: translateY(0);
+}
+
+.back-to-bottom-enter-active {
+    opacity: 1;
+    transform: translateY(0);
+    transition: all 300ms;
+}
+
+.back-to-bottom-exit {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.back-to-bottom-exit-active {
+    opacity: 0;
+    transform: translateY(80px);
+    transition: all 300ms;
+}

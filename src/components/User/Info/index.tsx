@@ -10,11 +10,12 @@ type Props = {
         }
         level: number
     }
-    setLoginStatus: Function
 }
-
-export default function Info({ userInfo, setLoginStatus }: Props) {
-    const change = useCallback(() => setLoginStatus(true), [])
+export default function Info({ userInfo }: Props) {
+    const history = useHistory()
+    const change = useCallback(() => {
+        history.push('/login')
+    }, [])
     return (
         <div className={'user-info-container'}>
             <div className={'user-info-content'}>

@@ -20,12 +20,12 @@ export class Song {
                     window.requestAnimationFrame(frame)
                 }
             }
+            this.audio.volume = 0
             window.requestAnimationFrame(frame)
         })
     }
     songFadeOutPause() {
         if (!this.audio.src) return
-        this.totalVolume = 1
         return new Promise((resolve) => {
             const frame = () => {
                 this.totalVolume -= this.DEFAULT_VOLUME
@@ -39,6 +39,7 @@ export class Song {
                     window.requestAnimationFrame(frame)
                 }
             }
+            this.totalVolume = 1
             window.requestAnimationFrame(frame)
         })
     }

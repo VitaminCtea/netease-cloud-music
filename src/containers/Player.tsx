@@ -15,17 +15,17 @@ import Player from 'components/Player'
 export type PlayerProps = ReturnType<typeof mapStateToProps> &
     ReturnType<typeof mapDispatchToProps>
 
-// 获取所有state下发到player里
-const getState = (state: RootState) =>
-    Object.entries(state).reduce(
-        (result: { [PropName: string]: any }, [key, val]) => {
-            result[key] = val
-            return result
-        },
-        {}
-    )
-
-const mapStateToProps = (state: RootState) => getState(state)
+const mapStateToProps = (state: RootState) => ({
+    fullScreen: state.fullScreen,
+    playing: state.playing,
+    currentSong: state.currentSong,
+    currentIndex: state.currentIndex,
+    playlist: state.playlist,
+    playMode: state.playMode,
+    sequenceList: state.sequenceList,
+    playModeIconClassName: state.playModeIconClassName,
+    favoritePlaylist: state.loginStatusCode === 200 && state.favoriteList,
+})
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
     updateFullScreenState: (isFullScreen: boolean) => {

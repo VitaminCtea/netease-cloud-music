@@ -1,18 +1,22 @@
 @import "../../style/variable"
 @import "../../style/helper"
 
-.my-content
-  position: relative
-  .user-backgroundImage
-    position: absolute
-    left: 0
-    top: 0
-    bottom: 0
-    right: 0
-    background-size: cover
-    background-repeat: no-repeat
-    background-position: center
-    filter: brightness(.2)
-    z-index: -1
-    background-color: #5E7085
-    max-height: pxToRem(180)
+.my-container
+  @extend %container
+  height: 100%
+  .my-content
+    position: relative
+    height: 100%
+    .user-backgroundImage
+      position: absolute
+      left: 0
+      top: 0
+      bottom: 0
+      right: 0
+      background-size: cover
+      background-repeat: no-repeat
+      background-position: center
+      filter: brightness(.2)
+      z-index: -1
+      background-color: #5E7085
+      max-height: pxToRem(180)

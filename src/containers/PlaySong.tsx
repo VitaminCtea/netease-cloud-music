@@ -6,21 +6,18 @@ import {
     setFullScreen,
     setPlaying,
     setSequenceList,
-    updatePlayInfo
+    updatePlayInfo,
 } from 'actions/player'
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-    updatePlayState: (playlist: any[], index: number, isFullScreen?: boolean) => {
+    updatePlayState: (playlist: any[], index: number) => {
         batch(() => {
             dispatch(updatePlayInfo(playlist, index) as any)
             dispatch(setSequenceList(playlist))
             dispatch(setPlaying(true))
             dispatch(getCurrentSong() as any)
-            if (isFullScreen) dispatch(setFullScreen(true))
         })
     },
 })
 
-export {
-    mapDispatchToProps
-}
+export { mapDispatchToProps }

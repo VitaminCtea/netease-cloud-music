@@ -1,42 +1,21 @@
 import React from 'react'
-import {
-    BrowserRouter as Router,
-    Route,
-    Redirect,
-    Switch,
-} from 'react-router-dom'
+import { BrowserRouter as Router, useLocation } from 'react-router-dom'
 import Header from './Header'
 import Player from 'containers/Player'
-import Found from 'containers/Found'
-import User from 'containers/User'
-import Register from 'components/Register'
+import { routes, renderRoutes } from 'Routes/index'
+import './App.css'
 
-function App() {
-    return (
-        <Router>
-            <Header />
-            <Switch>
-                <Route exact path={'/register'} component={Register} />
-                <Route exact path={'/found'} component={Found} />
-                <Route exact path={'/video'} component={Video} />
-                <Route exact path={'/cloudVillage'} component={CloudVillage} />
-                <Route exact path={'/'} component={User} />
-                <Redirect to={'/found'} />
-            </Switch>
-            <Player />
-        </Router>
-    )
+const Routers = () => {
+    const location = useLocation()
+    return <>{renderRoutes(routes, '/found', { location })}</>
 }
 
-const Video = () => (
-    <div>
-        video.........................................................................................
-    </div>
-)
-const CloudVillage = () => (
-    <div>
-        CloudVillage.........................................................................................
-    </div>
+const App = () => (
+    <Router>
+        <Header />
+        <Routers />
+        <Player />
+    </Router>
 )
 
 export default App

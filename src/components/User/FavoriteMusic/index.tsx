@@ -1,29 +1,47 @@
-import React, { Suspense } from 'react'
-import PageTransition from 'common/PageTransition'
-import { FavoriteMapState } from 'containers/FavoriteMusic'
-import GeneralLoading from 'common/GeneralLoading'
+import React from 'react'
+import { RouterTransition } from 'common/RouterTransition'
 import './index.sass'
 
-type Props = {
-    playlist: FavoriteMapState['playlist']
-    setShow: Function
-    show: boolean
-    updatePlayState: Function
+const Playlist = React.lazy(() => import('containers/Playlist'))
+
+function flow(steps: Function[], done: Function) {
+    function factory() {
+        let used = false
+        return function next() {
+            if (used) return
+            used = true
+            let step = steps.shift()
+            if (step && typeof step === 'function') {
+                const args = Array.from(arguments)
+                const err = args.shift()
+                if (err) {
+                    done(err)
+                    return
+                }
+                args.push(factory())
+                step.apply(null, args)
+            } else {
+                done.apply(null, arguments)
+            }
+        }
+    }
+    const start = factory()
+    return start()
 }
 
-const Playlist = React.lazy(() => import('common/Playlist'))
+const one = (next: Function) => next('', 2)
+const second = (res: number, next: Function) => next('', res * 2)
+const third = (res: number, next: Function) => next('', res * 34)
 
-export default function FavoriteMusic({ playlist, setShow, show, updatePlayState }: Props) {
-    if (!playlist) return null
+flow([one, second, third], (err: any, res: any) => {
+    if (err) throw err
+    console.log(res)
+})
+
+export default function FavoriteMusic() {
     return (
-        <PageTransition isShow={show} className={'favoriteList-container'}>
-            <Suspense fallback={ <GeneralLoading /> }>
-                <Playlist
-                        id={ playlist.id }
-                        setShow={ setShow }
-                        updatePlayState={ updatePlayState }
-                />
-            </Suspense>
-        </PageTransition>
+        <RouterTransition className={'favoriteList-container'}>
+            <Playlist />
+        </RouterTransition>
     )
 }

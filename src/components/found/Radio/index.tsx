@@ -5,28 +5,27 @@ import AnimationImage from 'common/AnimationImage'
 import Recommend from 'common/RecommendList'
 import './index.sass'
 
-// fetch('/api/dj/catelist').then(res => res.json()).then(res => { // 电台类别
-//     console.log(res)
-//     const id = res.categories[4].id
-//     fetch(`/api/dj/recommend/type?type=${id}`).then(res => res.json()).then(res => {    // 某一个电台
-//         console.log(res)
-//         const rid = res.djRadios[0].id
-//         fetch(`/api/dj/program?rid=${rid}&limit=40`).then(res => res.json()).then(res => {  // 电台类别详情
-//             console.log(res) // 5
-//             fetch(`/api/song/url?id=${res.programs[0].mainSong.id}`).then(res => res.json()).then(res => console.log(res))  // 电台URL
-//         })
-//     })
-// })
+const CancelToken = axios.CancelToken
 
 export default function Radio() {
     const [radioList, setRadioList] = useState<any[]>([])
+    const cancel = useRef<any[]>([])
     const getRadioList = useMemo(() => {
         return async function (limit: string = '1') {
-            const radioTypeRes = await axios.get('/api/dj/catelist')
+            const radioTypeRes = await axios.get('/api/dj/catelist', {
+                cancelToken: new CancelToken(function executor(c) {
+                    cancel.current.push(c)
+                }),
+            })
             const typeIndex = random(0, radioTypeRes.data.categories.length - 1)
             const djId = radioTypeRes.data.categories[typeIndex].id
             const radioItemRes = await axios.get(
-                `/api/dj/recommend/type?type=${djId}`
+                `/api/dj/recommend/type?type=${djId}`,
+                {
+                    cancelToken: new CancelToken(function executor(c) {
+                        cancel.current.push(c)
+                    }),
+                }
             )
             const descriptionList: { text: string }[] = []
             const requestList = radioItemRes.data.djRadios
@@ -40,7 +39,12 @@ export default function Radio() {
                     })
                     const radioItemId = item.id
                     return axios.get(
-                        `/api/dj/program?rid=${radioItemId}&limit=${limit}`
+                        `/api/dj/program?rid=${radioItemId}&limit=${limit}`,
+                        {
+                            cancelToken: new CancelToken(function executor(c) {
+                                cancel.current.push(c)
+                            }),
+                        }
                     )
                 })
             axios.all(requestList).then(
@@ -62,6 +66,13 @@ export default function Radio() {
     }, [])
     useEffect(() => {
         getRadioList()
+        return () => {
+            if (cancel.current.length) {
+                cancel.current.forEach((item) => {
+                    item()
+                })
+            }
+        }
     }, [])
     return (
         <Recommend

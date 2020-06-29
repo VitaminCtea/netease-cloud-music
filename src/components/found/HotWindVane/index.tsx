@@ -1,21 +1,50 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react'
+import React, { useCallback, useEffect, useMemo, useState, useRef } from 'react'
 import axios from 'axios'
+import { v4 as uuidv4 } from 'uuid'
 import FoundHeader from 'common/FoundHeader'
 import TouchScroll from 'common/TouchScroll'
 import AnimationImage from 'common/AnimationImage'
-import { Loading } from 'common/Loading'
+import { Loading } from 'common/loading/ListLoading'
 import './index.sass'
+
+const CancelToken = axios.CancelToken
 
 type Data = { [PropName: string]: any }
 export default function HotWindVane() {
     const [topList, setTopList] = useState<Data[]>([])
+    const cancel = useRef<any[]>([])
     const getTopList = useCallback(() => {
         const baseURL = '/api/top/list'
-        const getNewSong = () => axios.get(`${baseURL}?idx=0`)
-        const getHotSongList = () => axios.get(`${baseURL}?idx=1`)
-        const getOriginalList = () => axios.get(`${baseURL}?idx=2`)
-        const getSoaringList = () => axios.get(`${baseURL}?idx=3`)
-        const getRapList = () => axios.get(`${baseURL}?idx=23`)
+        const getNewSong = () =>
+            axios.get(`${baseURL}?idx=0`, {
+                cancelToken: new CancelToken(function executor(c) {
+                    cancel.current.push(c)
+                }),
+            })
+        const getHotSongList = () =>
+            axios.get(`${baseURL}?idx=1`, {
+                cancelToken: new CancelToken(function executor(c) {
+                    cancel.current.push(c)
+                }),
+            })
+        const getOriginalList = () =>
+            axios.get(`${baseURL}?idx=2`, {
+                cancelToken: new CancelToken(function executor(c) {
+                    cancel.current.push(c)
+                }),
+            })
+        const getSoaringList = () =>
+            axios.get(`${baseURL}?idx=3`, {
+                cancelToken: new CancelToken(function executor(c) {
+                    cancel.current.push(c)
+                }),
+            })
+        const getRapList = () =>
+            axios.get(`${baseURL}?idx=23`, {
+                cancelToken: new CancelToken(function executor(c) {
+                    cancel.current.push(c)
+                }),
+            })
 
         axios
             .all([
@@ -54,7 +83,14 @@ export default function HotWindVane() {
     )
     useEffect(() => {
         getTopList()
-    }, [getTopList])
+        return () => {
+            if (cancel.current.length) {
+                cancel.current.forEach((item) => {
+                    item()
+                })
+            }
+        }
+    }, [])
     return (
         <div className={'hotWindVane-container'}>
             <FoundHeader
@@ -104,7 +140,7 @@ export default function HotWindVane() {
                                                     className={
                                                         'hotWindVane-list-item'
                                                     }
-                                                    key={itemIndex + 10}
+                                                    key={uuidv4()}
                                                 >
                                                     <div
                                                         className={

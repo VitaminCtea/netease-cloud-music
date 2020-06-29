@@ -90,7 +90,7 @@ export default class TouchScroll extends React.Component<Props, State> {
             } else if (paddingL) {
                 totalPadding = paddingL
             } else if (paddingR) {
-                totalPadding = paddingL
+                totalPadding = paddingR
             }
             if (this.marginRight) {
                 totalPadding += this.marginRight / 2 + this.marginRight

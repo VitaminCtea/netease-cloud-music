@@ -139,7 +139,7 @@
                 left: 0
                 top: 0
                 width: 100%
-            .playlist-creatorName
+            .playlist-creatorName, .playlist-login
               display: inline-block
               @include setPadding(left, pxToRem(6))
               font-size: 12px
@@ -171,6 +171,13 @@
   .songList-content
     z-index: 1
     height: 160%
+    .no_favoriteMusic
+      position: absolute
+      top: 50%
+      left: 50%
+      transform: translate(-50%, -50%)
+      font-size: 14px
+      color: #ccc
     .songList-header
       position: sticky
       top: 50px

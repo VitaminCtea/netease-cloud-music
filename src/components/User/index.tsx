@@ -1,65 +1,54 @@
-import React, { useMemo, useState, Suspense } from 'react'
-import Placeholder from 'common/Placeholder'
+import React, { useRef } from 'react'
+import { useLocation } from 'react-router-dom'
+import { RouterChildTransition } from 'common/RouterTransition'
 import Info from './Info'
 import Music from './Music'
 import UserManagement from './UserManagement'
 import RecentlyPlayed from './RecentlyPlayed'
 import PlaylistType from './PlaylistType'
-import GeneralLoading from 'common/GeneralLoading'
 import { MapStateToProps } from 'containers/User'
-import PageTransition from 'common/PageTransition'
+import renderRoutes from 'Routes/RenderRoutes'
 import './index.sass'
-
-const Login = React.lazy(() => import('containers/Login'))
 
 export default function My({
     userInfo,
-    userRegisterState,
-    userLoginState,
-}: MapStateToProps) {
-    const [loginStatus, setLoginStatus] = useState(false)
-    const defaultUserInfo = useMemo(
-        () => ({
-            profile: {
-                avatarUrl: '',
-                nickname: 'xxx',
-            },
-            level: 0,
-        }),
-        []
-    )
+    userPlaylist,
+    route,
+}: MapStateToProps & any) {
+    const location = useLocation()
+    const defaultUserInfo = useRef({
+        profile: {
+            avatarUrl: '',
+            nickname: '去登录',
+        },
+        level: 0,
+    })
     return (
-        <>
-            <div className={'my-container'}>
-                <Placeholder />
-                <div className={'my-content'}>
-                    <div
-                        className={'user-backgroundImage'}
-                        style={{
-                            backgroundImage: `url(${
-                                userInfo ? userInfo.profile.backgroundUrl : ''
-                            })`,
-                        }}
-                    />
-                    <Info
-                        userInfo={userInfo ? userInfo : defaultUserInfo}
-                        setLoginStatus={setLoginStatus}
-                    />
-                    <UserManagement />
-                    <Music />
-                    <RecentlyPlayed />
-                    <PlaylistType playlistCountInfo={null} />
-                </div>
+        <div className={'my-container'}>
+            <div className={'my-content'}>
+                <div
+                    className={'user-backgroundImage'}
+                    style={{
+                        backgroundImage: `url(${
+                            userInfo ? userInfo.profile.backgroundUrl : ''
+                        })`,
+                    }}
+                />
+                <Info
+                    userInfo={userInfo ? userInfo : defaultUserInfo.current}
+                />
+                <UserManagement />
+                <Music
+                    playlistId={
+                        userPlaylist ? userPlaylist.user.favoritePlaylist.id : 0
+                    }
+                />
+                <RecentlyPlayed />
+                <PlaylistType playlistCountInfo={null} />
+                <RouterChildTransition>
+                    {renderRoutes(route.routes, undefined, { location })}
+                </RouterChildTransition>
             </div>
-            <Suspense fallback={<GeneralLoading />}>
-                <PageTransition
-                    isShow={loginStatus && !userLoginState}
-                    timeout={200}
-                    className={'login-container'}
-                >
-                    <Login setLoginStatus={setLoginStatus} />
-                </PageTransition>
-            </Suspense>
-        </>
+        </div>
     )
 }

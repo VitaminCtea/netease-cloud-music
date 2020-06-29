@@ -219,7 +219,7 @@ const checkVisible = (component: LazyImage) => {
             component.visible = true
             component.forceUpdate()
         }
-    } else if (!component.visible) {
+    } else {
         component.visible = false
         if (component.props.unmountIfInvisible) {
             component.forceUpdate()
@@ -239,10 +239,13 @@ let lazyLoadHandler = (scrollPort: HTMLElement) => {
         )
     }
     listeners = listeners.filter((component) => !component.visible)
-    if (listeners.length === 0) {
-        ;(lazyLoadHandler as any) = null
-        return
+    for (let i: number = 0; i < listeners.length; i++) {
+        const listener = listeners[i]
+        checkVisible(listener)
     }
+}
+
+export let checkUpdate = () => {
     for (let i: number = 0; i < listeners.length; i++) {
         const listener = listeners[i]
         checkVisible(listener)

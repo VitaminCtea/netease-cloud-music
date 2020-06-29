@@ -14,6 +14,8 @@ export const SET_PLAY_MODE_ICON = 'SET_PLAY_MODE_ICON'
 
 export const SET_SEQUENCE_LIST = 'SET_SEQUENCE_LIST'
 
+export const SET_INSERT_SONG = 'SET_INSERT_SONG'
+
 // user constants
 export const SET_USER_INFO = 'SET_USER_INFO'
 
@@ -26,6 +28,10 @@ export const SET_USER_REGISTER_STATE = 'SET_USER_REGISTER_STATE'
 export const SET_USER_LOGIN_STATE = 'SET_USER_LOGIN_STATE'
 
 export const SET_LOGIN_STATUS_CODE = 'SET_LOGIN_STATUS_CODE'
+
+export const SET_NETWORK_STATUS = 'SET_NETWORK_STATUS'
+
+export const SET_FAVORITE_PLAYLIST = 'SET_FAVORITE_PLAYLIST'
 
 type Obj = { [PropName: string]: any }
 export type Action =
@@ -43,6 +49,9 @@ export type Action =
     | { type: typeof SET_USER_REGISTER_STATE; userRegisterState: boolean }
     | { type: typeof SET_USER_LOGIN_STATE; userLoginState: boolean }
     | { type: typeof SET_LOGIN_STATUS_CODE; loginStatusCode: number }
+    | { type: typeof SET_INSERT_SONG; insertSong: Obj[] | Obj }
+    | { type: typeof SET_NETWORK_STATUS; networkStatus: 'good' | 'error' }
+    | { type: typeof SET_FAVORITE_PLAYLIST; favoritePlaylist: Obj[] }
 
 export type Playlist = {
     user: {
@@ -51,6 +60,7 @@ export type Playlist = {
     }
     collectionPlayList: any[]
 }
+
 export type Params = {
     fullScreen: boolean
     playing: boolean
@@ -65,4 +75,7 @@ export type Params = {
     userRegisterState: boolean
     userLoginState: boolean
     loginStatusCode: number
+    insertSong: Obj[] | Obj
+    networkStatus: 'good' | 'error'
+    favoritePlaylist: Obj[]
 }

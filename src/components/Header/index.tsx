@@ -1,31 +1,31 @@
-import React, { useMemo } from 'react'
+import React, { useRef } from 'react'
 import { NavLink } from 'react-router-dom'
+import Placeholder from 'common/Placeholder'
 import './index.sass'
 
 export default function Header() {
-    const content: string[] = useMemo(
-        () => ['我的', '发现', '云村', '视频'],
-        []
-    )
-    const paths: string[] = useMemo(
-        () => ['/', '/found', '/cloudVillage', '/video'],
-        []
-    )
+    const content = useRef(['我的', '发现', '云村', '视频'])
+    const paths = useRef(['/', '/found', '/cloudVillage', '/video'])
     return (
         <header className={'header'}>
+            <Placeholder />
             <div className={'container'}>
                 <div className={'icon-menu-container'}>
                     <span className={'icon-menu'} />
                 </div>
                 <div className={'main'}>
                     <div className={'header-href-container'}>
-                        {content.map((item, index) => (
+                        {content.current.map((item, index) => (
                             <div className={'href-content'} key={index}>
                                 <NavLink
                                     exact
-                                    to={paths[index]}
-                                    activeClassName={'defaultActive'}
+                                    to={paths.current[index]}
                                     className={'link'}
+                                    activeStyle={{
+                                        fontWeight: 'bold',
+                                        fontSize: '16px',
+                                        color: '#000',
+                                    }}
                                 >
                                     {item}
                                 </NavLink>

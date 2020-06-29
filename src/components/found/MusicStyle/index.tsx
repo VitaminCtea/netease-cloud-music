@@ -4,12 +4,13 @@ import { v4 as uuidv4 } from 'uuid'
 import FoundHeader from 'common/FoundHeader'
 import TouchScroll from 'common/TouchScroll'
 import AnimationImage from 'common/AnimationImage'
-import { Loading } from 'common/Loading/index'
+import { Loading } from 'common/loading/ListLoading/index'
 import { random } from 'helper/index'
 import { PlayerProps } from 'containers/MusicStyle'
 import './index.sass'
 
 const EXTRACT_NUMBER = 9
+const CancelToken = axios.CancelToken
 
 type Props = {
     name: string
@@ -18,25 +19,31 @@ type Props = {
 }
 
 const Item = ({ name, picUrl, singer }: Props) => (
-   <div className={'newMusic-item'}>
-       <div className={'newMusic-image-container'}>
-           <AnimationImage src={`${picUrl}`}
-                           alt={name}
-                           overflow={true}
-                           inProp={true}
-                           className={'newMusic-image'}
-                />
-       </div>
-       <div className={'newMusic-right-container'}>
-           <div className={'newMusic-info'}>
-               <span className={'newMusic-name'}>{name}</span>
-               <span className={ 'newMusic-singer' } style={{ fontSize: '12px' }}>{ singer }</span>
-           </div>
-           <div className={'icon-newMusic-play-container'}>
-               <i className={ 'icon-musicStyle-borderPlay' } />
-           </div>
-       </div>
-   </div>
+    <div className={'newMusic-item'}>
+        <div className={'newMusic-image-container'}>
+            <AnimationImage
+                src={`${picUrl}`}
+                alt={name}
+                overflow={true}
+                inProp={true}
+                className={'newMusic-image'}
+            />
+        </div>
+        <div className={'newMusic-right-container'}>
+            <div className={'newMusic-info'}>
+                <span className={'newMusic-name'}>{name}</span>
+                <span
+                    className={'newMusic-singer'}
+                    style={{ fontSize: '12px' }}
+                >
+                    {singer}
+                </span>
+            </div>
+            <div className={'icon-newMusic-play-container'}>
+                <i className={'icon-musicStyle-borderPlay'} />
+            </div>
+        </div>
+    </div>
 )
 type MusicStyleProps = {
     updatePlayState: PlayerProps
@@ -45,7 +52,10 @@ type MusicStyleProps = {
 export default function MusicStyle({ updatePlayState }: MusicStyleProps) {
     const [playlist, setPlayList] = useState<{ [PropName: string]: any }>({})
     const [title, setTitle] = useState<string>('')
+
     const type = useRef(['华语', '古风', '欧美', '流行'])
+    const cancel = useRef<any[]>([])
+
     const description = useRef([
         [
             '你在找的好听华语歌',
@@ -76,12 +86,21 @@ export default function MusicStyle({ updatePlayState }: MusicStyleProps) {
             }
             setTitle(title)
             const res = await axios.get(
-                `/api/top/playlist/highquality?cat=${type.current[index]}&limit=10`
+                `/api/top/playlist/highquality?cat=${type.current[index]}&limit=10`,
+                {
+                    cancelToken: new CancelToken(function executor(c) {
+                        cancel.current.push(c)
+                    }),
+                }
             )
 
             const lists = res.data.playlists
             const id = lists[random(0, lists.length - 1)].id
-            const details = await axios.get(`/api/playlist/detail?id=${id}`)
+            const details = await axios.get(`/api/playlist/detail?id=${id}`, {
+                cancelToken: new CancelToken(function executor(c) {
+                    cancel.current.push(c)
+                }),
+            })
             const songs = details.data.playlist.tracks
 
             const resultSongs = Array.from({ length: EXTRACT_NUMBER }).map(
@@ -103,7 +122,7 @@ export default function MusicStyle({ updatePlayState }: MusicStyleProps) {
             name: item.name,
             picUrl: item.al.picUrl,
             singer: item.ar[0].name,
-            key: uuidv4()
+            key: uuidv4(),
         }
     }, [])
 
@@ -126,7 +145,7 @@ export default function MusicStyle({ updatePlayState }: MusicStyleProps) {
                 )
             })
         }
-    }, [ playlist ])
+    }, [playlist])
 
     useEffect(() => {
         if (!playlist.tracks) {
@@ -135,10 +154,18 @@ export default function MusicStyle({ updatePlayState }: MusicStyleProps) {
             const items = document.querySelectorAll('.newMusic-item')!
             for (let i: number = 0; i < items.length; i++) {
                 let item = items[i] as HTMLElement
-                while (item.className !== 'newMusic-item') item = item.parentNode as HTMLElement
+                while (item.className !== 'newMusic-item')
+                    item = item.parentNode as HTMLElement
                 item.onclick = () => {
                     updatePlayState(playlist.tracks, i)
                 }
+            }
+        }
+        return () => {
+            if (cancel.current.length) {
+                cancel.current.forEach((item) => {
+                    item()
+                })
             }
         }
     }, [playlist])

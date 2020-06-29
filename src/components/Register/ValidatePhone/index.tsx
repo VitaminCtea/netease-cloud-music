@@ -97,6 +97,9 @@ export default function ValidatePhone({
             if (index === 3) {
                 dispatch({
                     type: 'reset',
+                    payload: {
+                        enabled: false,
+                    },
                 })
                 axios
                     .get(
@@ -121,8 +124,11 @@ export default function ValidatePhone({
             }
             index++
         }
+
         document.addEventListener('keydown', setCode, false)
+
         getVerificationCode(value)
+
         return () => {
             document.removeEventListener('keydown', setCode)
         }

@@ -1,14 +1,13 @@
-import React, { useCallback, useState, Suspense } from 'react'
+import React, { useCallback } from 'react'
+import { useHistory } from 'react-router-dom'
 import './index.sass'
-import GeneralLoading from 'common/GeneralLoading'
 
-const FavoriteMusic = React.lazy(() => import('containers/FavoriteMusic'))
-
-export default function Music() {
-    const [show, setShow] = useState(false)
+export default function Music({ playlistId }: { playlistId: number }) {
+    const history = useHistory()
     const enterDetails = useCallback(() => {
-        setShow(!show)
-    }, [show])
+        if (playlistId === 0) return
+        history.push(`/favorite_playlist/${playlistId}`)
+    }, [playlistId])
     return (
         <div className={'my-music-container'}>
             <div className={'my-music-content'}>
@@ -55,9 +54,6 @@ export default function Music() {
                     </div>
                 </div>
             </div>
-            <Suspense fallback={<GeneralLoading />}>
-                <FavoriteMusic setShow={setShow} show={show} />
-            </Suspense>
         </div>
     )
 }

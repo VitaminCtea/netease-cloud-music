@@ -12,6 +12,7 @@ import {
     DURATION,
     miniPlayerDefaultStyle,
 } from 'common/ts/pageTransitionStyle'
+import Marquee from 'common/Marquee'
 import './index.sass'
 
 const MINUTES = 60
@@ -46,6 +47,7 @@ export default function Player({
     const lyricRef: Ref<HTMLSpanElement> = useRef(null)
     const lyric = useLyric(currentSong!, time)
     const [miniPlayerHeight, setMiniPlayerHeight] = useState(0)
+
     const touch = useRef<Touch>({
         startX: 0,
         isTouch: false,
@@ -57,23 +59,23 @@ export default function Player({
     // icon图标
     const icons = useMemo(
         () => [
-            'icon-favorite_border',
+            currentSong?.isFavoriteMusic
+                ? 'icon-favorite_background'
+                : 'icon-favorite_border',
             'icon-download',
             'icon-vip',
             'icon-player-comment',
             'icon-player-info',
         ],
-        []
+        [currentSong]
     )
-    const controlsIcons = useMemo(
-        () => [
-            'icon-player-prevSong',
-            'icon-normalPlayer_play',
-            'icon-player-nextSong',
-            'icon-normalPlayer_playlist',
-        ],
-        []
-    )
+    const controlsIcons = useRef([
+        'icon-player-prevSong',
+        'icon-normalPlayer_play',
+        'icon-player-nextSong',
+        'icon-normalPlayer_playlist',
+    ])
+
     // 创建icon图标DOM
     const createIcons = useCallback(
         (icons: string[]) =>
@@ -358,8 +360,8 @@ export default function Player({
                 case 'icon-normalPlayer_pause':
                 case 'icon-normalPlayer_play':
                     const className = playing
-                        ? 'icon-normalPlayer_pause' :
-                            'icon-normalPlayer_play'
+                        ? 'icon-normalPlayer_pause'
+                        : 'icon-normalPlayer_play'
                     target.className = className
                     await setSongFade(audioRef!.current!)
                     updatePlayingState(!playing)
@@ -382,12 +384,15 @@ export default function Player({
 
     useEffect(() => {
         if (fullScreen) {
-            const iconPlay = getSelector('.icon-normalPlayer_play')
-            const className = playing ? 'icon-normalPlayer_play' : 'icon-normalPlayer_pause'
+            const iconPlay = getSelector('.icon-normalPlayer_pause')
+            const className = playing
+                ? 'icon-normalPlayer_play'
+                : 'icon-normalPlayer_pause'
             if (iconPlay !== null) {
                 iconPlay.className = className
             }
         }
+        // 当前歌曲链接地址无效时, 自动下一曲
         if (currentSong && !currentSong.url) {
             setTimeout(() => {
                 songEnd()
@@ -426,9 +431,15 @@ export default function Player({
                                     onClick={setFullScreen}
                                 />
                                 <div className={'normal-player-song-details'}>
-                                    <span className={'normal-player-song'}>
-                                        {currentSong!.name}
-                                    </span>
+                                    <Marquee
+                                        spaceRight={100}
+                                        style={{ marginBottom: '4px' }}
+                                        nodeKey={currentSong.id}
+                                    >
+                                        <span className={'normal-player-song'}>
+                                            {currentSong!.name}
+                                        </span>
+                                    </Marquee>
                                     <span className={'normal-player-singer'}>
                                         {currentSong!.ar[0].name + '>'}{' '}
                                     </span>
@@ -438,11 +449,11 @@ export default function Player({
                                 <i className={'icon-share'} />
                             </div>
                         </div>
-                        <div className={'singing-arm-container'}>
+                        <div className={'singing-arm-container '}>
                             <div className={'singing-arm-content'} />
                         </div>
                         <div
-                            className={'record-container keyframes-rotate'}
+                            className={' record-container keyframes-rotate'}
                             ref={setRecordRef}
                         >
                             <div className={'record-negative'} />
@@ -499,7 +510,7 @@ export default function Player({
                                     className={`${playModeIconClassName}`}
                                     onClick={setPlayMode}
                                 />
-                                {createIcons(controlsIcons)}
+                                {createIcons(controlsIcons.current)}
                             </div>
                         </div>
                     </div>

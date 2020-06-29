@@ -55,17 +55,18 @@ export default function Tip({
 }: Props) {
     const timer = useRef<number | null>(null)
     const [enabledAnimation, setEnableAnimation] = useState<boolean>(enabled)
-    const iconType = useMemo(() => icons[type], [type])
-    const setTimer = () => {
-        if (timer.current) clearTimeout(timer.current)
-        setEnableAnimation(true)
-        timer.current = setTimeout(() => {
-            setEnableAnimation(false)
-            clearTimeout(timer.current!)
-            timer.current = null
-        }, closeTime)
-    }
+    const iconType = useMemo(() => icons[type], [type, message, enabled])
+
     useEffect(() => {
+        const setTimer = () => {
+            if (timer.current) clearTimeout(timer.current)
+            setEnableAnimation(true)
+            timer.current = setTimeout(() => {
+                setEnableAnimation(false)
+                clearTimeout(timer.current!)
+                timer.current = null
+            }, closeTime)
+        }
         setTimer()
         return () => clearTimeout(timer.current!)
     }, [enabled, message, type])

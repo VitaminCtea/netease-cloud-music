@@ -16,16 +16,21 @@ import {
     userLoginState,
     userRegisterState,
     loginStatusCode,
+    favoriteList,
 } from './user'
+
+import { networkStatus } from './network'
 
 export type RootState = ReturnType<typeof rootReducer>
 const rootReducer = combineReducers({
+    networkStatus,
     loginStatusCode,
     userRegisterState,
     userLoginState,
     userInfo,
     userPlaylist,
     userPlaylistCountInfo,
+    favoriteList,
     fullScreen,
     playing,
     playlist,

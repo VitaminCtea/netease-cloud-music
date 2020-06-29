@@ -3,6 +3,7 @@ import * as constants from 'constants/index'
 import { createAction } from './createAction'
 import { Dispatch } from '../index'
 import { Playlist } from 'constants/index'
+import { NetworkStatus, setNetworkStatus } from './network'
 
 export const setUserInfo = createAction(constants.SET_USER_INFO, 'userInfo')
 
@@ -31,19 +32,13 @@ export const setLoginStatusCode = createAction(
     'loginStatusCode'
 )
 
-export type UserInfoInterface = typeof getUserInfo
-export const getUserInfo = (phone: string, password: string) => async (
-    dispatch: Dispatch
-) => {
-    const result = await axios.get(
-        `/api/login/cellphone?phone=${phone}&password=${password}`
-    )
-    if (result.data.code > 200) {
-        dispatch(setLoginStatusCode(result.data.code))
-        return
-    }
-    const userId = result.data.profile.userId
+export const setFavoritePlaylist = createAction(
+    constants.SET_FAVORITE_PLAYLIST,
+    'favoritePlaylist'
+)
 
+export type UserInfoInterface = typeof getUserInfo
+export const getUserInfo = (userId: number) => async (dispatch: Dispatch) => {
     const userInfo = await axios.get(`/api/user/detail?uid=${userId}`)
     dispatch(setUserInfo(userInfo.data))
 
@@ -51,6 +46,7 @@ export const getUserInfo = (phone: string, password: string) => async (
     dispatch(setUserPlaylistCountInfo(playlistInfo.data))
 
     const userPlaylist = await axios.get(`/api/user/playlist?uid=${userId}`)
+
     const playlist = userPlaylist.data.playlist
 
     const list: Playlist = {
@@ -73,11 +69,19 @@ export const getUserInfo = (phone: string, password: string) => async (
         }
     })
 
+    const favoriteListResult = await axios.get(
+        `/api/playlist/detail?id=${list.user.favoritePlaylist.id}`
+    )
+    const favoriteList = favoriteListResult.data.playlist.tracks
+
+    dispatch(setFavoritePlaylist(favoriteList))
+
     dispatch(setUserPlaylist(list))
 
     localStorage.setItem('userInfo', JSON.stringify(userInfo.data))
     localStorage.setItem('userPlaylistInfo', JSON.stringify(playlistInfo.data))
     localStorage.setItem('userPlaylist', JSON.stringify(list))
+    localStorage.setItem('userFavoriteList', JSON.stringify(favoriteList))
 
     dispatch(setUserRegisterState(true))
     dispatch(setUserLoginState(true))

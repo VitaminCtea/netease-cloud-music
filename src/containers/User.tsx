@@ -1,3 +1,4 @@
+import React from 'react'
 import { connect } from 'react-redux'
 import User from 'components/User'
 import { RootState } from '../reducers'
@@ -11,4 +12,4 @@ const mapStateToProps = (state: RootState) => ({
     userLoginState: state.userLoginState,
 })
 
-export default connect(mapStateToProps, null)(User)
+export default connect(mapStateToProps, null)(React.memo(User))

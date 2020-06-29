@@ -9,7 +9,7 @@ export const createAction = <
 ) => (...payloads: [constants.Params[A]]): constants.Action =>
     argNames.reduce(
         (result, current, index) => {
-            result[current] = payloads[index]
+            result[current] = payloads[index] ?? null
             return result
         },
         { type } as any

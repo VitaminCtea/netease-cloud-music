@@ -1,5 +1,5 @@
 import React from 'react'
-import LazyImage from 'common/LazyImage'
+import LazyImage, { checkUpdate } from 'common/LazyImage'
 import { Transition } from 'react-transition-group'
 
 const duration = 300
@@ -36,6 +36,7 @@ type Props = {
     placeholder?: React.ReactNode
     debounce?: number | boolean
     throttle?: number | boolean
+    data?: any
 }
 export default function AnimationImage(props: Props) {
     const {
@@ -50,6 +51,7 @@ export default function AnimationImage(props: Props) {
         placeholder,
         debounce,
         throttle,
+        data,
     } = props
     return (
         <LazyImage
@@ -76,3 +78,5 @@ export default function AnimationImage(props: Props) {
         </LazyImage>
     )
 }
+
+export { checkUpdate }

@@ -50,9 +50,13 @@ export default function NickName({
         const errorMsg = validate.check()
         return errorMsg
     }, [])
+
     const setRegister = useCallback(() => {
         dispatch({
             type: 'reset',
+            payload: {
+                enabled: false,
+            },
         })
         const form = formRef!.current!
         const password = form.userPassword.value
@@ -92,7 +96,7 @@ export default function NickName({
                 .catch(() => {
                     dispatch({
                         type: 'error',
-                        value: '注册失败, 服务器出小差啦',
+                        value: '注册失败, 服务器出小差啦~~',
                     })
                     changeRegister(false)
                 })
