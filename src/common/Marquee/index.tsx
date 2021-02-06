@@ -55,8 +55,7 @@ type Props = {
     interval?: number
     innerStyle?: { [PropName: string]: any }
 } & ContentProps
-export default class Marquee extends React.PureComponent<Props, {}>
-    implements MarqueeInterface {
+export default class Marquee extends React.PureComponent<Props, {}> implements MarqueeInterface {
     timer: number | null = 0
     requestAnimationFrameId: number | null = 0
     step = 0
@@ -192,7 +191,7 @@ export default class Marquee extends React.PureComponent<Props, {}>
                     : {
                           display: 'inline-block',
                           fontSize: `13px`,
-                      }
+                    }
             )
         )
     }

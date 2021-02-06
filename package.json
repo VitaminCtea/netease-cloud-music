@@ -59,16 +59,6 @@
     "semi": false,
     "singleQuote": true
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
-  },
-  "lint-staged": {
-    "src/**/*.{js,jsx,ts,tsx,json,css,md}": [
-      "prettier --write"
-    ]
-  },
   "extends": [
     "plugin:react-hooks/recommended"
   ],
